@@ -1,0 +1,89 @@
+package it.bitrule.hunts;
+
+import cn.nukkit.plugin.PluginBase;
+import it.bitrule.hunts.faction.FactionModel;
+import it.bitrule.hunts.listener.PlayerAsyncPreLoginListener;
+import it.bitrule.hunts.profile.ProfileModel;
+import it.bitrule.hunts.registry.FactionRegistry;
+import it.bitrule.miwiklark.common.Miwiklark;
+import it.bitrule.miwiklark.common.repository.Repository;
+import lombok.NonNull;
+import org.jetbrains.annotations.Nullable;
+
+public final class Hunts extends PluginBase {
+
+    private static @Nullable Hunts instance;
+
+    public static @NonNull Hunts getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("Hunts instance is not initialized");
+        }
+
+        return instance;
+    }
+
+    /**
+     * The faction repository.
+     */
+    private static @Nullable Repository<FactionModel> factionRepository;
+    /**
+     * The profile repository.
+     */
+    private static @Nullable Repository<ProfileModel> profileRepository;
+
+    /**
+     * Get the faction repository.
+     *
+     * @return The faction repository.
+     */
+    public static @NonNull Repository<FactionModel> getFactionRepository() {
+        if (factionRepository == null) {
+            throw new IllegalStateException("Faction repository is not initialized");
+        }
+
+        return factionRepository;
+    }
+
+    /**
+     * Get the profile repository.
+     *
+     * @return The profile repository.
+     */
+    public static @NonNull Repository<ProfileModel> getProfileRepository() {
+        if (profileRepository == null) {
+            throw new IllegalStateException("Profile repository is not initialized");
+        }
+
+        return profileRepository;
+    }
+
+    @Override
+    public void onLoad() {
+        instance = this;
+
+        this.saveDefaultConfig();
+
+        String dbName = this.getConfig().getString("mongodb.database");
+        if (dbName == null) {
+            throw new IllegalStateException("Database name is not defined in the configuration");
+        }
+
+        factionRepository = Miwiklark.addRepository(
+                FactionModel.class,
+                dbName,
+                "factions"
+        );
+        profileRepository = Miwiklark.addRepository(
+                ProfileModel.class,
+                dbName,
+                "profiles"
+        );
+
+        FactionRegistry.getInstance().loadAll();
+    }
+
+    @Override
+    public void onEnable() {
+        this.getServer().getPluginManager().registerEvents(new PlayerAsyncPreLoginListener(), this);
+    }
+}
