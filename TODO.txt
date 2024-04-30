@@ -1,0 +1,24 @@
+- Faction storage
+- Factions loader
+- DTR
+
+
+## Commands
+- /f create <name>
+- /f disband
+- /f invite <player>
+- /f kick <player>
+- /f join <faction>
+- /f leave
+- /f sethome
+- /f home
+- /f claim
+- /f unclaim
+- /f map
+- /f who <faction>
+- /f list
+- /f chat
+
+## Admin Commands
+- /f setdtr
+- /f setdtrregen
