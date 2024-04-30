@@ -1,10 +1,11 @@
 package it.bitrule.hunts.faction.member;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor @Data
+@RequiredArgsConstructor @Data @Builder
 public final class FactionMember {
 
     private final @NonNull String xuid;

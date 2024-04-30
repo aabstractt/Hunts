@@ -20,6 +20,7 @@ repositories {
 }
 
 dependencies {
+    compileOnly libs.commandapiNukkit.get()
     compileOnly libs.annotations.get()
     compileOnly libs.miwiklark.get()
     compileOnly libs.mot.get()

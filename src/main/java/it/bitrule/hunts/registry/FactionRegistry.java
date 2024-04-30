@@ -77,7 +77,7 @@ public final class FactionRegistry {
      * @return The faction or null if the faction does not exist.
      */
     public @Nullable Faction getFactionByName(@NonNull String name) {
-        UUID factionId = this.factionNames.get(name);
+        UUID factionId = this.factionNames.get(name.toLowerCase());
         if (factionId == null) return null;
 
         return this.factions.get(factionId);

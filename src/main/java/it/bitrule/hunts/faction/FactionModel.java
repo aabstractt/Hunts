@@ -2,6 +2,7 @@ package it.bitrule.hunts.faction;
 
 import cn.nukkit.level.Location;
 import com.google.gson.annotations.SerializedName;
+import it.bitrule.hunts.Hunts;
 import it.bitrule.hunts.faction.member.FactionRole;
 import it.bitrule.miwiklark.common.repository.model.IModel;
 import lombok.Data;
@@ -11,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RequiredArgsConstructor @Data
 public final class FactionModel implements IModel {
@@ -33,6 +35,10 @@ public final class FactionModel implements IModel {
      */
     private @Nullable Location hq = null;
     /**
+     * The DTR of the faction.
+     */
+    private double deathsUntilRaidable;
+    /**
      * The points of the faction.
      */
     private int points;
@@ -50,4 +56,17 @@ public final class FactionModel implements IModel {
      * The key is the member's identifier and the value is the member's role.
      */
     private final @NonNull Map<String, FactionRole> members = new HashMap<>();
+
+    /**
+     * Create a new faction model.
+     *
+     * @param name The name of the faction.
+     * @return The faction model.
+     */
+    public static @NonNull FactionModel create(@NonNull String name) {
+        FactionModel factionModel = new FactionModel(UUID.randomUUID().toString(), name);
+        factionModel.setDeathsUntilRaidable(Hunts.getInstance().getConfig().getDouble("factions.default-dtr"));
+
+        return factionModel;
+    }
 }
