@@ -1,8 +1,12 @@
 package it.bitrule.hunts.registry;
 
 import cn.nukkit.Player;
+import it.bitrule.hunts.Hunts;
 import it.bitrule.hunts.faction.Faction;
+import it.bitrule.hunts.faction.FactionModel;
 import it.bitrule.hunts.faction.member.FactionMember;
+import it.bitrule.hunts.faction.member.FactionRole;
+import it.bitrule.hunts.profile.ProfileModel;
 import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
@@ -32,8 +36,29 @@ public final class FactionRegistry {
      */
     private final @NonNull Map<String, UUID> playersFaction = new ConcurrentHashMap<>();
 
+    /**
+     * Load all factions from the database.
+     */
     public void loadAll() {
-        // Load all factions from the database
+        for (FactionModel factionModel : Hunts.getFactionRepository().findAll()) {
+            Faction faction = Faction.from(factionModel);
+            this.registerNewFaction(faction);
+
+            for (Map.Entry<String, FactionRole> entry : factionModel.getMembers().entrySet()) {
+                ProfileModel profileModel = Hunts.getProfileRepository().findOne(entry.getKey()).orElse(null);
+                if (profileModel == null || profileModel.getName() == null) continue;
+
+                this.setPlayerFaction(
+                        FactionMember.builder()
+                            .xuid(entry.getKey())
+                            .name(profileModel.getName())
+                            .kills(profileModel.getKills())
+                            .role(entry.getValue())
+                            .build(),
+                        faction
+                );
+            }
+        }
     }
 
     /**
