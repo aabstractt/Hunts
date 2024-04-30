@@ -7,7 +7,9 @@ import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.FactionModel;
 import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.faction.member.FactionRole;
+import it.bitrule.hunts.profile.Profile;
 import it.bitrule.hunts.registry.FactionRegistry;
+import it.bitrule.hunts.registry.ProfileRegistry;
 import it.bitrule.plorex.commands.abstraction.argument.Argument;
 import it.bitrule.plorex.commands.abstraction.argument.spec.ArgumentSpec;
 import it.bitrule.plorex.commands.actor.CommandActor;
@@ -34,6 +36,13 @@ public final class FactionCreateArgument extends Argument {
         Player player = commandActor.toPlayer().orElse(null);
         if (player == null) {
             commandActor.sendMessage(TextFormat.RED + "Only players can create factions");
+
+            return;
+        }
+
+        Profile profile = ProfileRegistry.getInstance().getProfileIfLoaded(player.getLoginChainData().getXUID());
+        if (profile == null) {
+            commandActor.sendMessage(TextFormat.RED + "Your profile is not loaded");
 
             return;
         }
@@ -68,6 +77,8 @@ public final class FactionCreateArgument extends Argument {
         FactionRegistry.getInstance().setPlayerFaction(
                 FactionMember.builder()
                         .xuid(player.getLoginChainData().getXUID())
+                        .name(player.getName())
+                        .kills(profile.getModel().getKills())
                         .role(FactionRole.LEADER)
                         .build(),
                 faction
