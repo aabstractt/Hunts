@@ -2,11 +2,15 @@ package it.bitrule.hunts.registry;
 
 import cn.nukkit.Player;
 import it.bitrule.hunts.Hunts;
+import it.bitrule.hunts.command.faction.FactionCreateArgument;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.FactionModel;
 import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.faction.member.FactionRole;
 import it.bitrule.hunts.profile.ProfileModel;
+import it.bitrule.plorex.commands.abstraction.MainCommand;
+import it.bitrule.plorex.commands.abstraction.argument.spec.ArgumentSpec;
+import it.bitrule.plorex.commands.util.Predicates;
 import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
@@ -145,5 +149,28 @@ public final class FactionRegistry {
         }
 
         //faction.removeMember(factionMember); // TODO: Add method to remove member from the faction
+    }
+
+    /**
+     * Create the main command.
+     * Add all the faction commands to the main command.
+     *
+     * @return The main command.
+     */
+    public @NonNull MainCommand createMainCommand() {
+        MainCommand mainCommand = new MainCommand(
+                "team",
+                "Team commands",
+                new String[] {"t", "faction", "f"},
+                ArgumentSpec.of(
+                        "/<label> help",
+                        Predicates.not(0)
+                )
+        );
+
+        mainCommand.registerArgument(new FactionCreateArgument());
+        mainCommand.injectSuggestions();
+
+        return mainCommand;
     }
 }

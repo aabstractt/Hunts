@@ -64,7 +64,7 @@ public final class Hunts extends PluginBase {
 
         this.saveDefaultConfig();
 
-        String dbName = this.getConfig().getString("mongodb.database");
+        String dbName = this.getConfig().getString("mongodb.dbname");
         if (dbName == null) {
             throw new IllegalStateException("Database name is not defined in the configuration");
         }
@@ -87,5 +87,7 @@ public final class Hunts extends PluginBase {
     public void onEnable() {
         this.getServer().getPluginManager().registerEvents(new PlayerAsyncPreLoginListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+
+        this.getServer().getCommandMap().register("team", FactionRegistry.getInstance().createMainCommand());
     }
 }
