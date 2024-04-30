@@ -1,16 +1,12 @@
 [plugins]
 shadow = "com.github.johnrengelman.shadow:7.1.2"
 spotless = "com.diffplug.spotless:6.17.0"
-bukkitPluginYAML = "net.minecrell.plugin-yml.bukkit:0.5.1"
 nukkitPluginYAML = "net.minecrell.plugin-yml.nukkit:0.5.1"
 
 [libraries]
 lombok = "org.projectlombok:lombok:1.18.24"
 mongodb = "org.mongodb:mongodb-driver-sync:4.8.1"
 gson = "com.google.code.gson:gson:2.10.1"
-jedis = "redis.clients:jedis:2.10.2"
-googleCollections = "com.google.collections:google-collections:1.0"
-apacheCommons = "org.apache.commons:commons-lang3:3.0"
 annotations = "org.jetbrains:annotations:24.0.1"
 mot = "cn.nukkit:nukkit:MOT-0.0.2"
 
