@@ -1,7 +1,7 @@
 - Faction storage
 - Factions loader
 - DTR
-
+- Scoreboard
 
 ## Commands
 - /f create <name>
@@ -22,3 +22,44 @@
 ## Admin Commands
 - /f setdtr
 - /f setdtrregen
+
+## Discord List
+• Spawn Command (T)
+• End-Exit Coords (T)
+• Fully Customizable Scoreboard
+• Faction System
+• Faction FriendlyFire Command (On Scoreboard)
+• Faction Rally Command (On Scoreboard)
+• Faction Coords Command (On Scoreboard)
+• Faction Camp Command (On Scoreboard)
+• Faction Top Command
+• Crates System
+• Kit System
+• Disable Blocks on Combat (T)
+• Deathban System
+• Daily Reclaim
+• Configurable Revive
+• Kit System
+• Auto-Save
+• Enchants (Speed, Fireres, invis)
+• KoTH Coords (On Scoreboard) (T)
+• LFF Command
+• Nametags System
+• Endplayers | Netherplayers Command
+• CustomTimers System
+• Kill-Streaks
+• Chat Configuration
+
+Events ↴
+• KoTH
+• Conquest
+• Citadel
+• SupplyDrop
+• Purge
+
+Classes ↴
+• Bard
+• Rogue
+• Archer
+• Miner
+• Mage
