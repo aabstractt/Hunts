@@ -64,7 +64,7 @@ java {
 }
 
 nukkit {
-    main = "it.bitrule.phoenix.Phoenix"
+    main = "it.bitrule.hunts.Hunts"
     api = ["1.0.0"]
     version = "${project.version}"
     authors = ["bitrule"]
