@@ -33,6 +33,19 @@ public final class FactionModel implements IModel {
      */
     private @Nullable Location hq = null;
     /**
+     * The points of the faction.
+     */
+    private int points;
+    /**
+     * The balance of the faction.
+     */
+    private int balance;
+    /**
+     * The koth captures of the faction.
+     */
+    private int kothCaptures;
+
+    /**
      * The members of the faction.
      * The key is the member's identifier and the value is the member's role.
      */
