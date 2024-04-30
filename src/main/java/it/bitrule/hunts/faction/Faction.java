@@ -39,6 +39,17 @@ public final class Faction {
     }
 
     /**
+     * Remove a member from the faction.
+     *
+     * @param xuid The XUID of the member to remove.
+     */
+    public void removeMember(@NonNull String xuid) {
+        this.model.getMembers().remove(xuid);
+
+        this.factionMembers.removeIf(factionMember -> factionMember.getXuid().equals(xuid));
+    }
+
+    /**
      * Get a member by their XUID.
      *
      * @param xuid The XUID of the member.

@@ -148,7 +148,7 @@ public final class FactionRegistry {
             throw new IllegalStateException("Faction does not exist");
         }
 
-        //faction.removeMember(factionMember); // TODO: Add method to remove member from the faction
+        faction.removeMember(factionMember.getXuid());
     }
 
     /**
