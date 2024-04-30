@@ -2,6 +2,7 @@ package it.bitrule.hunts.registry;
 
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
+import it.bitrule.hunts.profile.Profile;
 import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,6 +19,28 @@ public final class ProfileRegistry {
      * The key is the player's name and the value is the player's XUID.
      */
     private final @NonNull Map<String, String> playersXuid = new ConcurrentHashMap<>();
+    /**
+     * The profiles loaded.
+     * The key is the player's XUID and the value is the profile.
+     */
+    private final @NonNull Map<String, Profile> profilesLoaded = new ConcurrentHashMap<>();
+
+    /**
+     * Register a new profile.
+     * @param profile The profile to register.
+     */
+    public void registerNewProfile(@NonNull Profile profile) {
+        this.profilesLoaded.put(profile.getModel().getIdentifier(), profile);
+    }
+
+    /**
+     * Get the profile of the player.
+     * @param xuid The XUID of the player.
+     * @return The profile of the player or null if the profile is not found.
+     */
+    public @Nullable Profile getProfileIfLoaded(@NonNull String xuid) {
+        return this.profilesLoaded.get(xuid);
+    }
 
     /**
      * Set the player's XUID using the player's name.

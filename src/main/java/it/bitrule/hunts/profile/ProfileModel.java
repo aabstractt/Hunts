@@ -23,4 +23,8 @@ public final class ProfileModel implements IModel {
      * The last name of the profile.
      */
     private @Nullable String lastName;
+    /**
+     * The kills of the profile.
+     */
+    private int kills;
 }
