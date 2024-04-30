@@ -65,11 +65,14 @@ public final class FactionCreateArgument extends Argument {
         // TODO: Create the faction
 
         Faction faction = Faction.from(FactionModel.create(args[0]));
-        faction.addMember(FactionMember.builder()
-                .xuid(player.getLoginChainData().getXUID())
-                .role(FactionRole.LEADER)
-                .build()
+        FactionRegistry.getInstance().setPlayerFaction(
+                FactionMember.builder()
+                        .xuid(player.getLoginChainData().getXUID())
+                        .role(FactionRole.LEADER)
+                        .build(),
+                faction
         );
+        FactionRegistry.getInstance().registerNewFaction(faction);
 
         // TODO: Add the faction to the registry
 

@@ -6,6 +6,7 @@ import cn.nukkit.event.player.PlayerAsyncPreLoginEvent;
 import cn.nukkit.utils.TextFormat;
 import it.bitrule.hunts.Hunts;
 import it.bitrule.hunts.profile.ProfileModel;
+import it.bitrule.hunts.registry.ProfileRegistry;
 import lombok.NonNull;
 
 import java.util.Objects;
@@ -36,6 +37,12 @@ public final class PlayerAsyncPreLoginListener implements Listener {
             Hunts.getProfileRepository().save(profileModel);
         }
 
+        // Trigger the update member event
+        ProfileRegistry.getInstance().triggerUpdateMember(
+                profileModel.getLastName(),
+                ev.getName(),
+                xuid
+        );
         // TODO: Load the local profile
     }
 }

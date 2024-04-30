@@ -1,0 +1,73 @@
+package it.bitrule.hunts.registry;
+
+import it.bitrule.hunts.faction.Faction;
+import it.bitrule.hunts.faction.member.FactionMember;
+import lombok.Getter;
+import lombok.NonNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public final class ProfileRegistry {
+
+    @Getter private final static @NonNull ProfileRegistry instance = new ProfileRegistry();
+
+    /**
+     * The players' XUID.
+     * The key is the player's name and the value is the player's XUID.
+     */
+    private final @NonNull Map<String, String> playersXuid = new ConcurrentHashMap<>();
+
+    /**
+     * Set the player's XUID using the player's name.
+     *
+     * @param sourceName The name of the player.
+     * @param sourceXuid The XUID of the player.
+     */
+    public void setPlayerXuid(@NonNull String sourceName, @NonNull String sourceXuid) {
+        this.playersXuid.put(sourceName.toLowerCase(), sourceXuid);
+    }
+
+    /**
+     * Get the player's XUID using the player's name.
+     *
+     * @param sourceName The name of the player.
+     * @return The player's XUID or null if the player's XUID is not found.
+     */
+    public @Nullable String getPlayerXuid(@NonNull String sourceName) {
+        return this.playersXuid.get(sourceName.toLowerCase());
+    }
+
+    /**
+     * Remove the player's XUID using the player's name.
+     *
+     * @param sourceName The name of the player.
+     */
+    public void removePlayerXuid(@NonNull String sourceName) {
+        this.playersXuid.remove(sourceName.toLowerCase());
+    }
+
+    /**
+     * Trigger an update member event.
+     *
+     * @param sourceName the name of the source
+     * @param sourceXuid the xuid of the source
+     */
+    public void triggerUpdateMember(@Nullable String oldSourceName, @NonNull String sourceName, @NonNull String sourceXuid) {
+        if (oldSourceName == null || this.getPlayerXuid(oldSourceName) == null) return;
+
+        this.removePlayerXuid(oldSourceName);
+        this.setPlayerXuid(sourceName, sourceXuid);
+
+        Faction faction = FactionRegistry.getInstance().getFactionByPlayer(sourceName);
+        if (faction == null) return;
+
+        FactionMember factionMember = faction.getMemberByXuid(sourceXuid);
+        if (factionMember == null) {
+            throw new IllegalStateException("Faction member is not found");
+        }
+
+        factionMember.setName(sourceName);
+    }
+}
