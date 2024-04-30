@@ -27,4 +27,8 @@ public final class ProfileModel implements IModel {
      * The kills of the profile.
      */
     private int kills;
+    /**
+     * The deaths of the profile.
+     */
+    private int deaths;
 }

@@ -75,12 +75,7 @@ public final class FactionCreateArgument extends Argument {
 
         Faction faction = Faction.from(FactionModel.create(args[0]));
         FactionRegistry.getInstance().setPlayerFaction(
-                FactionMember.builder()
-                        .xuid(player.getLoginChainData().getXUID())
-                        .name(player.getName())
-                        .kills(profile.getModel().getKills())
-                        .role(FactionRole.LEADER)
-                        .build(),
+                FactionMember.create(profile.getModel(), FactionRole.LEADER),
                 faction
         );
         FactionRegistry.getInstance().registerNewFaction(faction);

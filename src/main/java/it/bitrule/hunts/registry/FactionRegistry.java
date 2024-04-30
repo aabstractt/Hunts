@@ -53,12 +53,7 @@ public final class FactionRegistry {
                 if (profileModel == null || profileModel.getName() == null) continue;
 
                 this.setPlayerFaction(
-                        FactionMember.builder()
-                            .xuid(entry.getKey())
-                            .name(profileModel.getName())
-                            .kills(profileModel.getKills())
-                            .role(entry.getValue())
-                            .build(),
+                        FactionMember.create(profileModel, entry.getValue()),
                         faction
                 );
             }
