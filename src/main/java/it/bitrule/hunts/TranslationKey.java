@@ -11,7 +11,10 @@ import java.util.Map;
 public enum TranslationKey {
 
     // Translation keys for player
-    PLAYER_YOU_ALREADY_IN_FACTION("player.already-in-faction"),
+    PLAYER_SELF_ALREADY_IN_FACTION("player.already-in-faction"),
+    PLAYER_SELF_MUST_BE_IN_FACTION("player.self-must-be-in-faction"),
+    PLAYER_NOT_FACTION_MEMBER("player.not-faction-member"),
+    PLAYER_CANNOT_KICK_SELF("player.cannot-kick-self"),
 
     // Translation keys for Factions
     FACTION_ALREADY_EXISTS("faction.already-exists", "faction");

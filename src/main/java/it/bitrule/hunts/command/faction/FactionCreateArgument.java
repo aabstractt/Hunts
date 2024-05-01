@@ -55,7 +55,7 @@ public final class FactionCreateArgument extends Argument {
         }
 
         if (FactionRegistry.getInstance().getFactionByPlayer(player) != null) {
-            commandActor.sendMessage(TranslationKey.PLAYER_YOU_ALREADY_IN_FACTION.build());
+            commandActor.sendMessage(TranslationKey.PLAYER_SELF_ALREADY_IN_FACTION.build());
 
             return;
         }

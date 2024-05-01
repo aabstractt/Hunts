@@ -62,6 +62,18 @@ public final class Faction {
     }
 
     /**
+     * Get a member by their name.
+     *
+     * @param name The name of the member.
+     * @return The member or null if the member is not found.
+     */
+    public @Nullable FactionMember getMemberByName(@NonNull String name) {
+        return this.factionMembers.stream()
+                .filter(factionMember -> factionMember.getName().equalsIgnoreCase(name)).findFirst()
+                .orElse(null);
+    }
+
+    /**
      * Create a new faction from the faction model.
      *
      * @param factionModel The faction model.

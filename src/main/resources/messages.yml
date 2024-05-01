@@ -2,7 +2,11 @@ player:
   already-in-faction: "&cYou are already in a faction."
   target-already-in-faction: "&cThe target player is already in a faction."
 
-  not-in-faction: "&cYou are not in a faction."
+  not-faction-member: "&cThis player is not a member of your faction."
+
+  cannot-kick-self: "&4You cannot kick yourself from the faction"
+
+  self-must-be-in-faction: "&cYou are not in a faction."
   target-not-in-faction: "&cThe target player is not in a faction."
 
 faction:

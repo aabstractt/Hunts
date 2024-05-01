@@ -3,6 +3,7 @@ package it.bitrule.hunts.registry;
 import cn.nukkit.Player;
 import it.bitrule.hunts.Hunts;
 import it.bitrule.hunts.command.faction.FactionCreateArgument;
+import it.bitrule.hunts.command.faction.FactionKickArgument;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.FactionModel;
 import it.bitrule.hunts.faction.member.FactionMember;
@@ -164,6 +165,7 @@ public final class FactionRegistry {
         );
 
         mainCommand.registerArgument(new FactionCreateArgument());
+        mainCommand.registerArgument(new FactionKickArgument());
         mainCommand.injectSuggestions();
 
         return mainCommand;
