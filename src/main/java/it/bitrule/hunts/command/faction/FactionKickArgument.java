@@ -47,14 +47,14 @@ public final class FactionKickArgument extends Argument {
             return;
         }
 
-        FactionMember lazyFactionMember = faction.getMemberByXuid(source.getLoginChainData().getXUID());
-        if (lazyFactionMember == null) {
+        FactionMember selfFactionMember = faction.getMemberByXuid(source.getLoginChainData().getXUID());
+        if (selfFactionMember == null) {
             source.sendMessage(TranslationKey.PLAYER_SELF_MUST_BE_IN_FACTION.build());
 
             return;
         }
 
-        if (lazyFactionMember.getRole() != FactionRole.LEADER) {
+        if (selfFactionMember.getRole() != FactionRole.LEADER) {
             source.sendMessage(TextFormat.RED + "You must be the leader of the faction to kick players");
 
             return;
@@ -76,8 +76,8 @@ public final class FactionKickArgument extends Argument {
         }
 
         String kickedSomeoneMessage = TranslationKey.FACTION_SUCCESSFULLY_KICKED_SOMEONE.build(source.getName(), factionMember.getName());
-        for (FactionMember targetFactionMember : faction.getFactionMembers()) {
-            Player target = targetFactionMember.wrapPlayer();
+        for (FactionMember lazyFactionMember : faction.getFactionMembers()) {
+            Player target = lazyFactionMember.wrapPlayer();
             if (target == null || !target.isOnline()) continue;
 
             target.sendMessage(kickedSomeoneMessage);
