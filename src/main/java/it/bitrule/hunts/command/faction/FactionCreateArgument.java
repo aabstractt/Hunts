@@ -3,6 +3,7 @@ package it.bitrule.hunts.command.faction;
 import cn.nukkit.Player;
 import cn.nukkit.utils.TextFormat;
 import it.bitrule.hunts.Hunts;
+import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.FactionModel;
 import it.bitrule.hunts.faction.member.FactionMember;
@@ -48,13 +49,13 @@ public final class FactionCreateArgument extends Argument {
         }
 
         if (FactionRegistry.getInstance().getFactionByName(args[0]) != null) {
-            commandActor.sendMessage(TextFormat.RED + "Faction already exists"); // TODO: Add message to the locale
+            commandActor.sendMessage(TranslationKey.FACTION_ALREADY_EXISTS.build(args[0]));
 
             return;
         }
 
         if (FactionRegistry.getInstance().getFactionByPlayer(player) != null) {
-            commandActor.sendMessage(TextFormat.RED + "You are already in a faction"); // TODO: Add message to the locale
+            commandActor.sendMessage(TranslationKey.PLAYER_YOU_ALREADY_IN_FACTION.build());
 
             return;
         }

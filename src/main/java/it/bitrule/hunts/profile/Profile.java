@@ -7,8 +7,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor @Data
 public final class Profile {
 
+    /**
+     * The profile model.
+     */
     private final @NonNull ProfileModel model;
 
+    /**
+     * Whether the profile is dirty.
+     */
     private boolean dirty = false;
 
     /**

@@ -81,6 +81,8 @@ public final class Hunts extends PluginBase {
         );
 
         FactionRegistry.getInstance().loadAll();
+
+        TranslationKey.adjustIntern();
     }
 
     @Override

@@ -1,0 +1,94 @@
+package it.bitrule.hunts;
+
+import cn.nukkit.utils.Config;
+import cn.nukkit.utils.TextFormat;
+import lombok.NonNull;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+public enum TranslationKey {
+
+    // Translation keys for player
+    PLAYER_YOU_ALREADY_IN_FACTION("player.already-in-faction"),
+
+    // Translation keys for Factions
+    FACTION_ALREADY_EXISTS("faction.already-exists", "faction");
+
+    private final static @NonNull Map<String, String> translations = new HashMap<>();
+
+    /**
+     * The message key
+     */
+    private final @NonNull String messageKey;
+    /**
+     * The arguments to replace
+     */
+    private final @NonNull String[] arguments;
+
+    TranslationKey(@NonNull String messageKey, @NonNull String... arguments) {
+        this.messageKey = messageKey;
+        this.arguments = arguments;
+    }
+
+    /**
+     * Build the message with the arguments
+     *
+     * @param args the arguments
+     * @return the built message
+     */
+    public @NonNull String build(@NonNull Object... args) {
+        if (args.length != this.arguments.length) {
+            throw new IllegalArgumentException("Invalid number of arguments");
+        }
+
+        String message = wrapMessage(this.messageKey);
+        for (int i = 0; i < this.arguments.length; i++) {
+            try {
+                message = message.replaceAll("<" + this.arguments[i] + ">", args[i].toString());
+            } catch (Exception e) {
+                e.printStackTrace(System.out);
+
+                break;
+            }
+        }
+
+        return message;
+    }
+
+    /**
+     * Wrap the message with the key
+     * @param messageKey The message key
+     * @return The wrapped message
+     */
+    public static @NonNull String wrapMessage(@NonNull String messageKey) {
+        if (translations.isEmpty()) {
+            return TextFormat.colorize("&f<Missing key '&a" + messageKey + "&f'>");
+        }
+
+        String message = translations.get(messageKey);
+        if (message.isBlank() || message.isEmpty()) return TextFormat.colorize("&f<Missing key '&a" + messageKey + "&f'>");
+
+//        String[] subStrings = JavaUtils.substringsBetween(message, "<!", ">");
+        String[] subStrings = null;
+        if (subStrings == null) return TextFormat.colorize(message);
+
+        for (String substring : subStrings) {
+            message = message.replaceAll("<!" + substring + ">", wrapMessage(substring));
+        }
+
+        return TextFormat.colorize(message);
+    }
+
+    static void adjustIntern() {
+        Config messagesConfig = new Config(new File(Hunts.getInstance().getDataFolder(), "messages.yml"));
+
+        for (TranslationKey translationKey : values()) {
+            String message = messagesConfig.getString(translationKey.messageKey);
+            if (message == null || message.trim().isEmpty()) continue;
+
+            translations.put(translationKey.messageKey, TextFormat.colorize(message));
+        }
+    }
+}

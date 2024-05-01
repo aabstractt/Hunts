@@ -1,0 +1,10 @@
+player:
+  already-in-faction: "&cYou are already in a faction."
+  target-already-in-faction: "&cThe target player is already in a faction."
+
+  not-in-faction: "&cYou are not in a faction."
+  target-not-in-faction: "&cThe target player is not in a faction."
+
+faction:
+  already-exists: "&cThe faction already exists."
+  does-not-exist: "&cThe faction does not exist."
