@@ -3,6 +3,7 @@ package it.bitrule.hunts.command.faction;
 import cn.nukkit.Player;
 import cn.nukkit.utils.TextFormat;
 import it.bitrule.hunts.Hunts;
+import it.bitrule.hunts.Promise;
 import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
@@ -58,19 +59,23 @@ public final class FactionDisbandArgument extends Argument {
             return;
         }
 
+        // Put the disband message in a variable to avoid repeating the same message
+        String disbandMessage = TranslationKey.FACTION_SUCCESSFULLY_DISBANDED.build(faction.getModel().getName());
+
         for (FactionMember factionMember : faction.getFactionMembers()) {
             FactionRegistry.getInstance().clearPlayerFaction(factionMember);
+            faction.removeMember(factionMember.getXuid());
 
             Player player = ProfileRegistry.getInstance().getPlayerObject(factionMember.getXuid());
             if (player == null) continue;
 
-            // TODO: Send the message
+            player.sendMessage(disbandMessage);
         }
 
         faction.getFactionMembers().clear();
         faction.getModel().getMembers().clear();
 
-        // TODO: Delete the faction from the database but I need make this asynchronous
-        Hunts.getFactionRepository().delete(faction.getConvertedId().toString());
+        // Delete the faction from the database
+        Promise.runAsync(() -> Hunts.getFactionRepository().delete(faction.getConvertedId().toString()));
     }
 }

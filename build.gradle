@@ -20,6 +20,7 @@ repositories {
 }
 
 dependencies {
+    implementation libs.apacheCommons.get()
     compileOnly libs.commandapiNukkit.get()
     compileOnly libs.annotations.get()
     compileOnly libs.miwiklark.get()

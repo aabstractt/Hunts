@@ -3,6 +3,7 @@ package it.bitrule.hunts.command.faction;
 import cn.nukkit.Player;
 import cn.nukkit.utils.TextFormat;
 import it.bitrule.hunts.Hunts;
+import it.bitrule.hunts.Promise;
 import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.FactionModel;
@@ -91,6 +92,6 @@ public final class FactionCreateArgument extends Argument {
         // TODO: Add the faction to the registry
 
         // TODO: Add promise class methods to save asynchronously
-        Hunts.getFactionRepository().save(faction.getModel());
+        Promise.runAsync(() -> Hunts.getFactionRepository().save(faction.getModel()));
     }
 }

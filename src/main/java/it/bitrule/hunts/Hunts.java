@@ -94,4 +94,9 @@ public final class Hunts extends PluginBase {
 
         this.getServer().getCommandMap().register("team", FactionRegistry.getInstance().createMainCommand());
     }
+
+    @Override
+    public void onDisable() {
+        Promise.shutdown();
+    }
 }

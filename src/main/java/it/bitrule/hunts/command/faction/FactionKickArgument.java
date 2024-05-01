@@ -76,6 +76,7 @@ public final class FactionKickArgument extends Argument {
         }
 
         FactionRegistry.getInstance().clearPlayerFaction(factionMember);
+        faction.removeMember(factionMember.getXuid());
 
         // TODO: Send a message to the kicked player
         // TODO: Send a message to the faction members

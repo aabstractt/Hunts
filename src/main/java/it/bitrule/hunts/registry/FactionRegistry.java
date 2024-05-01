@@ -136,15 +136,7 @@ public final class FactionRegistry {
     public void clearPlayerFaction(@NonNull FactionMember factionMember) {
         ProfileRegistry.getInstance().removePlayerXuid(factionMember.getName());
 
-        UUID factionId = this.playersFaction.remove(factionMember.getXuid());
-        if (factionId == null) return;
-
-        Faction faction = this.factions.get(factionId);
-        if (faction == null) {
-            throw new IllegalStateException("Faction does not exist");
-        }
-
-        faction.removeMember(factionMember.getXuid());
+        this.playersFaction.remove(factionMember.getXuid());
     }
 
     /**

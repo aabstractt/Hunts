@@ -18,6 +18,8 @@ public enum TranslationKey {
 
     // Translation keys for Factions
     FACTION_ALREADY_EXISTS("faction.already-exists", "faction"),
+    FACTION_SUCCESSFULLY_CREATED("faction.successfully-created", "faction"),
+    FACTION_SUCCESSFULLY_DISBANDED("faction.successfully-disbanded", "who"),
     FACTION_NO_VALID_NAME("faction.no-valid-name");
 
     private final static @NonNull Map<String, String> translations = new HashMap<>();
