@@ -17,7 +17,8 @@ public enum TranslationKey {
     PLAYER_CANNOT_KICK_SELF("player.cannot-kick-self"),
 
     // Translation keys for Factions
-    FACTION_ALREADY_EXISTS("faction.already-exists", "faction");
+    FACTION_ALREADY_EXISTS("faction.already-exists", "faction"),
+    FACTION_NO_VALID_NAME("faction.no-valid-name");
 
     private final static @NonNull Map<String, String> translations = new HashMap<>();
 

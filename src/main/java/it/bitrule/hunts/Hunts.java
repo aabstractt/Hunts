@@ -3,6 +3,7 @@ package it.bitrule.hunts;
 import cn.nukkit.plugin.PluginBase;
 import it.bitrule.hunts.faction.FactionModel;
 import it.bitrule.hunts.listener.PlayerAsyncPreLoginListener;
+import it.bitrule.hunts.listener.PlayerJoinListener;
 import it.bitrule.hunts.listener.PlayerQuitListener;
 import it.bitrule.hunts.profile.ProfileModel;
 import it.bitrule.hunts.registry.FactionRegistry;
@@ -88,6 +89,7 @@ public final class Hunts extends PluginBase {
     @Override
     public void onEnable() {
         this.getServer().getPluginManager().registerEvents(new PlayerAsyncPreLoginListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
         this.getServer().getCommandMap().register("team", FactionRegistry.getInstance().createMainCommand());

@@ -12,3 +12,5 @@ player:
 faction:
   already-exists: "&cThe faction already exists."
   does-not-exist: "&cThe faction does not exist."
+
+  no-valid-name: "&cThe faction name must be between 3 and 16 characters"

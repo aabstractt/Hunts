@@ -1,5 +1,6 @@
 package it.bitrule.hunts.registry;
 
+import cn.nukkit.Player;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.profile.Profile;
@@ -19,6 +20,11 @@ public final class ProfileRegistry {
      * The key is the player's name and the value is the player's XUID.
      */
     private final @NonNull Map<String, String> playersXuid = new ConcurrentHashMap<>();
+    /**
+     * The players' object.
+     * The key is the player's xuid and the value is the player.
+     */
+    private final @NonNull Map<String, Player> playersObject = new ConcurrentHashMap<>();
     /**
      * The profiles loaded.
      * The key is the player's XUID and the value is the profile.
@@ -69,6 +75,26 @@ public final class ProfileRegistry {
      */
     public void removePlayerXuid(@NonNull String sourceName) {
         this.playersXuid.remove(sourceName.toLowerCase());
+    }
+
+    /**
+     * Set the player's object.
+     *
+     * @param sourceXuid The XUID of the player.
+     * @param source The player object.
+     */
+    public void setPlayerObject(@NonNull String sourceXuid, @NonNull Player source) {
+        this.playersObject.put(sourceXuid, source);
+    }
+
+    /**
+     * Get the player's object.
+     *
+     * @param sourceXuid The XUID of the player.
+     * @return The player object or null if the player object is not found.
+     */
+    public @Nullable Player getPlayerObject(@NonNull String sourceXuid) {
+        return this.playersObject.get(sourceXuid);
     }
 
     /**

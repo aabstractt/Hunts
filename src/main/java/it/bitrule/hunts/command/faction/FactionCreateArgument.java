@@ -49,7 +49,7 @@ public final class FactionCreateArgument extends Argument {
         }
 
         if (factionName.length() < 3 || factionName.length() > 16) {
-            commandActor.sendMessage(TextFormat.RED + "The faction name must be between 3 and 16 characters"); // TODO: Add message to the locale
+            commandActor.sendMessage(TranslationKey.FACTION_NO_VALID_NAME.build()); // TODO: Add message to the locale
 
             return;
         }
