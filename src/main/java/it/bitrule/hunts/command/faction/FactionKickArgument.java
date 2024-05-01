@@ -75,11 +75,22 @@ public final class FactionKickArgument extends Argument {
             return;
         }
 
+        String kickedSomeoneMessage = TranslationKey.FACTION_SUCCESSFULLY_KICKED_SOMEONE.build(source.getName(), factionMember.getName());
+        for (FactionMember targetFactionMember : faction.getFactionMembers()) {
+            Player target = targetFactionMember.wrapPlayer();
+            if (target == null || !target.isOnline()) continue;
+
+            target.sendMessage(kickedSomeoneMessage);
+        }
+
+        Player target = factionMember.wrapPlayer();
+        if (target != null && target.isOnline()) {
+            target.sendMessage(TranslationKey.PLAYER_SELF_KICKED.build(source.getName()));
+        }
+
         FactionRegistry.getInstance().clearPlayerFaction(factionMember);
         faction.removeMember(factionMember.getXuid());
 
-        // TODO: Send a message to the kicked player
-        // TODO: Send a message to the faction members
+        FactionRegistry.getInstance().markFactionDirty(faction); // Mark the faction as dirty to save it
     }
-
 }

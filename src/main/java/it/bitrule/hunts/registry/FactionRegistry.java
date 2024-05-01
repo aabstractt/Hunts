@@ -17,6 +17,7 @@ import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -40,6 +41,10 @@ public final class FactionRegistry {
      * The key is the player's XUID and the value is the faction's identifier.
      */
     private final @NonNull Map<String, UUID> playersFaction = new ConcurrentHashMap<>();
+    /**
+     * The factions that need to be saved.
+     */
+    private final @NonNull Set<UUID> factionsDirty = ConcurrentHashMap.newKeySet();
 
     /**
      * Load all factions from the database.
@@ -137,6 +142,16 @@ public final class FactionRegistry {
         ProfileRegistry.getInstance().removePlayerXuid(factionMember.getName());
 
         this.playersFaction.remove(factionMember.getXuid());
+    }
+
+    /**
+     * Mark a faction as dirty.
+     * This means that the faction needs to be saved.
+     *
+     * @param faction The faction to mark as dirty.
+     */
+    public void markFactionDirty(@NonNull Faction faction) {
+        this.factionsDirty.add(faction.getConvertedId());
     }
 
     /**

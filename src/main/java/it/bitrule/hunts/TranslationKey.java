@@ -15,11 +15,13 @@ public enum TranslationKey {
     PLAYER_SELF_MUST_BE_IN_FACTION("player.self-must-be-in-faction"),
     PLAYER_NOT_FACTION_MEMBER("player.not-faction-member"),
     PLAYER_CANNOT_KICK_SELF("player.cannot-kick-self"),
+    PLAYER_SELF_KICKED("player.self-kicked", "who"),
 
     // Translation keys for Factions
     FACTION_ALREADY_EXISTS("faction.already-exists", "faction"),
     FACTION_SUCCESSFULLY_CREATED("faction.successfully-created", "faction"),
     FACTION_SUCCESSFULLY_DISBANDED("faction.successfully-disbanded", "who"),
+    FACTION_SUCCESSFULLY_KICKED_SOMEONE("faction.successfully-kicked-someone", "who", "player"),
     FACTION_NO_VALID_NAME("faction.no-valid-name");
 
     private final static @NonNull Map<String, String> translations = new HashMap<>();
