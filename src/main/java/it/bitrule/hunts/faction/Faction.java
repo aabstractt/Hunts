@@ -56,9 +56,13 @@ public final class Faction {
      * @return The member or null if the member is not found.
      */
     public @Nullable FactionMember getMemberByXuid(@NonNull String xuid) {
-        return this.factionMembers.stream()
-                .filter(member -> member.getXuid().equals(xuid)).findFirst()
-                .orElse(null);
+        for (FactionMember factionMember : this.factionMembers) {
+            if (!factionMember.getXuid().equals(xuid)) continue;
+
+            return factionMember;
+        }
+
+        return null;
     }
 
     /**
@@ -68,9 +72,13 @@ public final class Faction {
      * @return The member or null if the member is not found.
      */
     public @Nullable FactionMember getMemberByName(@NonNull String name) {
-        return this.factionMembers.stream()
-                .filter(factionMember -> factionMember.getName().equalsIgnoreCase(name)).findFirst()
-                .orElse(null);
+        for (FactionMember factionMember : this.factionMembers) {
+            if (!factionMember.getName().equalsIgnoreCase(name)) continue;
+
+            return factionMember;
+        }
+
+        return null;
     }
 
     /**

@@ -70,7 +70,7 @@ public final class FactionKickArgument extends Argument {
         }
 
         if (factionMember.getXuid().equals(source.getLoginChainData().getXUID())) {
-            source.sendMessage(TextFormat.DARK_RED + "You cannot kick yourself from the faction");
+            source.sendMessage(TranslationKey.PLAYER_CANNOT_KICK_SELF.build());
 
             return;
         }
