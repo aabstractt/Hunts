@@ -41,6 +41,19 @@ public final class FactionCreateArgument extends Argument {
             return;
         }
 
+        String factionName = args[0].trim();
+        if (factionName.isEmpty()) {
+            commandActor.sendMessage(TextFormat.RED + "The faction name cannot be empty");
+
+            return;
+        }
+
+        if (factionName.length() < 3 || factionName.length() > 16) {
+            commandActor.sendMessage(TextFormat.RED + "The faction name must be between 3 and 16 characters"); // TODO: Add message to the locale
+
+            return;
+        }
+
         Profile profile = ProfileRegistry.getInstance().getProfileIfLoaded(player.getLoginChainData().getXUID());
         if (profile == null) {
             commandActor.sendMessage(TextFormat.RED + "Your profile is not loaded");
@@ -48,8 +61,8 @@ public final class FactionCreateArgument extends Argument {
             return;
         }
 
-        if (FactionRegistry.getInstance().getFactionByName(args[0]) != null) {
-            commandActor.sendMessage(TranslationKey.FACTION_ALREADY_EXISTS.build(args[0]));
+        if (FactionRegistry.getInstance().getFactionByName(factionName) != null) {
+            commandActor.sendMessage(TranslationKey.FACTION_ALREADY_EXISTS.build(factionName));
 
             return;
         }
@@ -60,13 +73,7 @@ public final class FactionCreateArgument extends Argument {
             return;
         }
 
-        if (args[0].length() < 3 || args[0].length() > 16) {
-            commandActor.sendMessage(TextFormat.RED + "The faction name must be between 3 and 16 characters"); // TODO: Add message to the locale
-
-            return;
-        }
-
-        if (!args[0].matches("^[a-zA-Z0-9_]*$")) {
+        if (!factionName.matches("^[a-zA-Z0-9_]*$")) {
             commandActor.sendMessage(TextFormat.RED + "The faction name must contain only letters, numbers, and underscores"); // TODO: Add message to the locale
 
             return;
@@ -74,7 +81,7 @@ public final class FactionCreateArgument extends Argument {
 
         // TODO: Create the faction
 
-        Faction faction = Faction.from(FactionModel.create(args[0]));
+        Faction faction = Faction.from(FactionModel.create(factionName));
         FactionRegistry.getInstance().setPlayerFaction(
                 FactionMember.create(profile.getModel(), FactionRole.LEADER),
                 faction

@@ -91,7 +91,7 @@ public enum TranslationKey {
             String message = messagesConfig.getString(translationKey.messageKey);
             if (message == null || message.trim().isEmpty()) continue;
 
-            translations.put(translationKey.messageKey, TextFormat.colorize(message));
+            translations.put(translationKey.messageKey, TextFormat.colorize(message.trim()));
         }
     }
 }
