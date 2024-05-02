@@ -1,5 +1,6 @@
 package it.bitrule.hunts.faction;
 
+import cn.nukkit.Player;
 import it.bitrule.hunts.faction.member.FactionMember;
 import lombok.Data;
 import lombok.NonNull;
@@ -79,6 +80,20 @@ public final class Faction {
         }
 
         return null;
+    }
+
+    /**
+     * Broadcast a message to all the faction members.
+     *
+     * @param message The message to broadcast.
+     */
+    public void broadcast(@NonNull String message) {
+        for (FactionMember factionMember : this.factionMembers) {
+            Player player = factionMember.wrapPlayer();
+            if (player == null || !player.isOnline()) continue;
+
+            player.sendMessage(message);
+        }
     }
 
     /**

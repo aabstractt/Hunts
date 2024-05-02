@@ -30,6 +30,7 @@ public enum TranslationKey {
     FACTION_INVITE_RECEIVED("faction.invite-received", "faction", "who"),
     FACTION_INVITE_SENT("faction.invite-sent", "player"),
     FACTION_INVITE_BROADCAST("faction.invite-broadcast", "player", "who"),
+    FACTION_FULL("faction.full"),
     FACTION_NO_VALID_NAME("faction.no-valid-name");
 
     private final static @NonNull Map<String, String> translations = new HashMap<>();
