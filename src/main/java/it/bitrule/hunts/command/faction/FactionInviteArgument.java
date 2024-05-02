@@ -3,6 +3,7 @@ package it.bitrule.hunts.command.faction;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.utils.TextFormat;
+import it.bitrule.hunts.Hunts;
 import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
@@ -67,6 +68,12 @@ public final class FactionInviteArgument extends Argument {
 
         if (target.getLoginChainData().getXUID().equalsIgnoreCase(source.getLoginChainData().getXUID())) {
             source.sendMessage(TranslationKey.PLAYER_CANNOT_INVITE_SELF.build());
+
+            return;
+        }
+
+        if (faction.getFactionMembers().size() >= Hunts.getYamlConfig().getFactions().getMaxMembers()) {
+            source.sendMessage(TranslationKey.FACTION_FULL.build());
 
             return;
         }
