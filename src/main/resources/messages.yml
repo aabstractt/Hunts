@@ -1,6 +1,6 @@
 player:
-  already-in-faction: "&cYou are already in a faction."
-  target-already-in-faction: "&cThe target player is already in a faction."
+  self-already-in-faction: "&cYou are already in a faction."
+  already-in-faction: "&cThe target player is already in a faction."
 
   not-faction-member: "&cThis player is not a member of your faction."
 
@@ -14,3 +14,8 @@ faction:
   does-not-exist: "&cThe faction does not exist."
 
   no-valid-name: "&cThe faction name must be between 3 and 16 characters"
+
+  member-already-invited: "&cThe target player has already been invited to the faction."
+  invite-received: "&aYou have been invited to join the faction &e<faction>&a. Type &e/f join <faction>&a to accept the invitation."
+  invite-sent: "&aYou have invited &e<player>&a to join the faction."
+  invite-broadcast: "&e<player>&a has joined the faction."

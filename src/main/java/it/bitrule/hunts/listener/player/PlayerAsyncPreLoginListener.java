@@ -1,4 +1,4 @@
-package it.bitrule.hunts.listener;
+package it.bitrule.hunts.listener.player;
 
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;

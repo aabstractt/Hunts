@@ -3,6 +3,8 @@ package it.bitrule.hunts.registry;
 import cn.nukkit.Player;
 import it.bitrule.hunts.Hunts;
 import it.bitrule.hunts.command.faction.FactionCreateArgument;
+import it.bitrule.hunts.command.faction.FactionDisbandArgument;
+import it.bitrule.hunts.command.faction.FactionInviteArgument;
 import it.bitrule.hunts.command.faction.FactionKickArgument;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.FactionModel;
@@ -20,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class FactionRegistry {
 
@@ -151,6 +154,8 @@ public final class FactionRegistry {
      * @param faction The faction to mark as dirty.
      */
     public void markFactionDirty(@NonNull Faction faction) {
+        if (this.factionsDirty.contains(faction.getConvertedId())) return;
+
         this.factionsDirty.add(faction.getConvertedId());
     }
 
@@ -171,10 +176,42 @@ public final class FactionRegistry {
                 )
         );
 
+        mainCommand.registerArgument(new FactionDisbandArgument());
         mainCommand.registerArgument(new FactionCreateArgument());
+        mainCommand.registerArgument(new FactionInviteArgument());
         mainCommand.registerArgument(new FactionKickArgument());
         mainCommand.injectSuggestions();
 
         return mainCommand;
+    }
+
+    /**
+     * Save all factions.
+     *
+     * @param wait Whether to wait for the factions to be saved.
+     */
+    public void saveAll(boolean wait) {
+        AtomicInteger count = new AtomicInteger(this.factionsDirty.size());
+
+        for (UUID factionId : this.factionsDirty) {
+            try {
+                Faction faction = this.factions.get(factionId);
+                if (faction == null) continue;
+
+                Hunts.getFactionRepository().save(faction.getModel());
+            } finally {
+                count.decrementAndGet();
+            }
+        }
+
+        while (wait && count.get() > 0) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        this.factionsDirty.clear();
     }
 }

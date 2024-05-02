@@ -10,9 +10,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor @Data
 public final class FactionModel implements IModel {
@@ -56,6 +54,10 @@ public final class FactionModel implements IModel {
      * The key is the member's identifier and the value is the member's role.
      */
     private final @NonNull Map<String, FactionRole> members = new HashMap<>();
+    /**
+     * The invites sent by the faction.
+     */
+    private final @NonNull Set<String> invitesSent = new HashSet<>();
 
     /**
      * Create a new faction model.

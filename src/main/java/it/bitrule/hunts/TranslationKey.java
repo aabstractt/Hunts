@@ -11,17 +11,25 @@ import java.util.Map;
 public enum TranslationKey {
 
     // Translation keys for player
-    PLAYER_SELF_ALREADY_IN_FACTION("player.already-in-faction"),
+    PLAYER_NOT_ONLINE("player.not-online", "player"),
+
+    PLAYER_SELF_ALREADY_IN_FACTION("player.self-already-in-faction"),
+    PLAYER_ALREADY_IN_FACTION("player.already-in-faction", "player"),
     PLAYER_SELF_MUST_BE_IN_FACTION("player.self-must-be-in-faction"),
     PLAYER_NOT_FACTION_MEMBER("player.not-faction-member"),
     PLAYER_CANNOT_KICK_SELF("player.cannot-kick-self"),
     PLAYER_SELF_KICKED("player.self-kicked", "who"),
+    PLAYER_CANNOT_INVITE_SELF("player.cannot-invite-self"),
 
     // Translation keys for Factions
     FACTION_ALREADY_EXISTS("faction.already-exists", "faction"),
     FACTION_SUCCESSFULLY_CREATED("faction.successfully-created", "faction"),
     FACTION_SUCCESSFULLY_DISBANDED("faction.successfully-disbanded", "who"),
     FACTION_SUCCESSFULLY_KICKED_SOMEONE("faction.successfully-kicked-someone", "who", "player"),
+    FACTION_MEMBER_ALREADY_INVITED("faction.member-already-invited", "player"),
+    FACTION_INVITE_RECEIVED("faction.invite-received", "faction", "who"),
+    FACTION_INVITE_SENT("faction.invite-sent", "player"),
+    FACTION_INVITE_BROADCAST("faction.invite-broadcast", "player", "who"),
     FACTION_NO_VALID_NAME("faction.no-valid-name");
 
     private final static @NonNull Map<String, String> translations = new HashMap<>();
