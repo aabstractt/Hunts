@@ -29,14 +29,14 @@ public final class ProfileRegistry {
      * The profiles loaded.
      * The key is the player's XUID and the value is the profile.
      */
-    private final @NonNull Map<String, Profile> profilesLoaded = new ConcurrentHashMap<>();
+    private final @NonNull Map<String, Profile> profiles = new ConcurrentHashMap<>();
 
     /**
      * Register a new profile.
      * @param profile The profile to register.
      */
     public void registerNewProfile(@NonNull Profile profile) {
-        this.profilesLoaded.put(profile.getModel().getIdentifier(), profile);
+        this.profiles.put(profile.getModel().getIdentifier(), profile);
     }
 
     /**
@@ -45,7 +45,7 @@ public final class ProfileRegistry {
      * @return The profile of the player or null if the profile is not found.
      */
     public @Nullable Profile getProfileIfLoaded(@NonNull String xuid) {
-        return this.profilesLoaded.get(xuid);
+        return this.profiles.get(xuid);
     }
 
     /**
