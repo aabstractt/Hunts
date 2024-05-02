@@ -1,6 +1,7 @@
 package it.bitrule.hunts;
 
 import cn.nukkit.plugin.PluginBase;
+import it.bitrule.hunts.config.YamlConfig;
 import it.bitrule.hunts.faction.FactionModel;
 import it.bitrule.hunts.listener.player.PlayerAsyncPreLoginListener;
 import it.bitrule.hunts.listener.player.PlayerJoinListener;
@@ -32,6 +33,10 @@ public final class Hunts extends PluginBase {
      * The profile repository.
      */
     private static @Nullable Repository<ProfileModel> profileRepository;
+    /**
+     * The YAML configuration parsed to an object.
+     */
+    private static @Nullable YamlConfig yamlConfig = null;
 
     /**
      * Get the faction repository.
@@ -57,6 +62,19 @@ public final class Hunts extends PluginBase {
         }
 
         return profileRepository;
+    }
+
+    /**
+     * Get the YAML configuration.
+     *
+     * @return The YAML configuration.
+     */
+    public static @NonNull YamlConfig getYamlConfig() {
+        if (yamlConfig == null) {
+            throw new IllegalStateException("YAML configuration is not initialized");
+        }
+
+        return yamlConfig;
     }
 
     @Override

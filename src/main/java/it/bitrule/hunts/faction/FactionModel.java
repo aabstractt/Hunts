@@ -35,7 +35,7 @@ public final class FactionModel implements IModel {
     /**
      * The DTR of the faction.
      */
-    private double deathsUntilRaidable;
+    private double power;
     /**
      * The points of the faction.
      */
@@ -67,7 +67,7 @@ public final class FactionModel implements IModel {
      */
     public static @NonNull FactionModel create(@NonNull String name) {
         FactionModel factionModel = new FactionModel(UUID.randomUUID().toString(), name);
-        factionModel.setDeathsUntilRaidable(Hunts.getInstance().getConfig().getDouble("factions.default-dtr"));
+        factionModel.setPower(Hunts.getYamlConfig().getFactions().getInitialPower());
 
         return factionModel;
     }
