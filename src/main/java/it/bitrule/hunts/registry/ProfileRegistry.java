@@ -49,6 +49,16 @@ public final class ProfileRegistry {
     }
 
     /**
+     * Remove the profile of the player.
+     *
+     * @param xuid The XUID of the player.
+     * @return The profile of the player or null if the profile is not found.
+     */
+    public @Nullable Profile removeProfile(@NonNull String xuid) {
+        return this.profiles.remove(xuid);
+    }
+
+    /**
      * Set the player's XUID using the player's name.
      *
      * @param sourceName The name of the player.

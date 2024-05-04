@@ -67,7 +67,7 @@ public final class FactionModel implements IModel {
      */
     public static @NonNull FactionModel create(@NonNull String name) {
         FactionModel factionModel = new FactionModel(UUID.randomUUID().toString(), name);
-        factionModel.setPower(Hunts.getYamlConfig().getFactions().getInitialPower());
+        factionModel.setPower(Hunts.getYamlConfig().factions().initialPower());
 
         return factionModel;
     }

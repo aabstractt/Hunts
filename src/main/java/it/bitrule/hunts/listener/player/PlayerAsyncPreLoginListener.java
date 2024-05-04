@@ -5,6 +5,7 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerAsyncPreLoginEvent;
 import cn.nukkit.utils.TextFormat;
 import it.bitrule.hunts.Hunts;
+import it.bitrule.hunts.profile.Profile;
 import it.bitrule.hunts.profile.ProfileModel;
 import it.bitrule.hunts.registry.ProfileRegistry;
 import lombok.NonNull;
@@ -43,6 +44,7 @@ public final class PlayerAsyncPreLoginListener implements Listener {
                 ev.getName(),
                 xuid
         );
+        ProfileRegistry.getInstance().registerNewProfile(new Profile(profileModel));
         // TODO: Load the local profile
     }
 }

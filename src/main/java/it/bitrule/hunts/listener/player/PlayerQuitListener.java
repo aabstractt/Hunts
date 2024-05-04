@@ -16,7 +16,7 @@ public final class PlayerQuitListener implements Listener {
     public void onPlayerQuitEvent(@NonNull PlayerQuitEvent ev) {
         Player player = ev.getPlayer();
 
-        Profile profile = ProfileRegistry.getInstance().getProfileIfLoaded(player.getLoginChainData().getXUID());
+        Profile profile = ProfileRegistry.getInstance().removeProfile(player.getLoginChainData().getXUID());
         if (profile == null) return;
 
         if (profile.isDirty()) {

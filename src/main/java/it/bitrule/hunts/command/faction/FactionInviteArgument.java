@@ -72,7 +72,7 @@ public final class FactionInviteArgument extends Argument {
             return;
         }
 
-        if (faction.getFactionMembers().size() >= Hunts.getYamlConfig().getFactions().getMaxMembers()) {
+        if (faction.getFactionMembers().size() >= Hunts.getYamlConfig().factions().maxMembers()) {
             source.sendMessage(TranslationKey.FACTION_FULL.build());
 
             return;

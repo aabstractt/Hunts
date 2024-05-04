@@ -1,8 +1,6 @@
 package it.bitrule.hunts.profile;
 
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @RequiredArgsConstructor @Data
 public final class Profile {
@@ -15,7 +13,7 @@ public final class Profile {
     /**
      * Whether the profile is dirty.
      */
-    private boolean dirty = false;
+    @Setter (value = AccessLevel.PRIVATE) private boolean dirty = false;
 
     /**
      * Mark the profile as dirty.

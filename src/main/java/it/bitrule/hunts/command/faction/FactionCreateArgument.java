@@ -49,7 +49,7 @@ public final class FactionCreateArgument extends Argument {
             return;
         }
 
-        if (factionName.length() < 3 || factionName.length() > 16) {
+        if (factionName.length() < Hunts.getYamlConfig().factions().minNameLength() || factionName.length() > Hunts.getYamlConfig().factions().maxNameLength()) {
             commandActor.sendMessage(TranslationKey.FACTION_NO_VALID_NAME.build()); // TODO: Add message to the locale
 
             return;
