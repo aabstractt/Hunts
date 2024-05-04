@@ -51,7 +51,7 @@ public final class FactionRegistry {
      */
     public void loadAll() {
         for (FactionModel factionModel : Hunts.getFactionRepository().findAll()) {
-            Faction faction = Faction.from(factionModel);
+            Faction faction = new Faction(UUID.fromString(factionModel.getIdentifier()), factionModel);
             this.registerNewFaction(faction);
 
             for (Map.Entry<String, FactionRole> entry : factionModel.getMembers().entrySet()) {

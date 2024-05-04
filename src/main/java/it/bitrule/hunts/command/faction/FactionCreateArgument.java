@@ -6,7 +6,6 @@ import it.bitrule.hunts.Hunts;
 import it.bitrule.hunts.Promise;
 import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.faction.Faction;
-import it.bitrule.hunts.faction.FactionModel;
 import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.faction.member.FactionRole;
 import it.bitrule.hunts.profile.Profile;
@@ -75,23 +74,18 @@ public final class FactionCreateArgument extends Argument {
         }
 
         if (!factionName.matches("^[a-zA-Z0-9_]*$")) {
-            commandActor.sendMessage(TextFormat.RED + "The faction name must contain only letters, numbers, and underscores"); // TODO: Add message to the locale
+            commandActor.sendMessage(TextFormat.RED + "The faction name must contain only letters, numbers, and underscores");
 
             return;
         }
 
-        // TODO: Create the faction
-
-        Faction faction = Faction.from(FactionModel.create(factionName));
+        Faction faction = Faction.empty(factionName);
         FactionRegistry.getInstance().setPlayerFaction(
                 FactionMember.create(profile.getModel(), FactionRole.LEADER),
                 faction
         );
         FactionRegistry.getInstance().registerNewFaction(faction);
 
-        // TODO: Add the faction to the registry
-
-        // TODO: Add promise class methods to save asynchronously
         Promise.runAsync(() -> Hunts.getFactionRepository().save(faction.getModel()));
     }
 }

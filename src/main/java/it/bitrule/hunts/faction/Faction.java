@@ -1,6 +1,7 @@
 package it.bitrule.hunts.faction;
 
 import cn.nukkit.Player;
+import it.bitrule.hunts.Hunts;
 import it.bitrule.hunts.faction.member.FactionMember;
 import lombok.Data;
 import lombok.NonNull;
@@ -99,10 +100,15 @@ public final class Faction {
     /**
      * Create a new faction from the faction model.
      *
-     * @param factionModel The faction model.
+     * @param factionName The name of the faction.
      * @return The faction.
      */
-    public static @NonNull Faction from(@NonNull FactionModel factionModel) {
-        return new Faction(UUID.fromString(factionModel.getIdentifier()), factionModel);
+    public static @NonNull Faction empty(@NonNull String factionName) {
+        UUID factionId = UUID.randomUUID();
+
+        FactionModel factionModel = new FactionModel(factionId.toString(), factionName);
+        factionModel.setPower(Hunts.getYamlConfig().factions().initialPower());
+
+        return new Faction(factionId, factionModel);
     }
 }

@@ -2,7 +2,6 @@ package it.bitrule.hunts.faction;
 
 import cn.nukkit.level.Location;
 import com.google.gson.annotations.SerializedName;
-import it.bitrule.hunts.Hunts;
 import it.bitrule.hunts.faction.member.FactionRole;
 import it.bitrule.miwiklark.common.repository.model.IModel;
 import lombok.Data;
@@ -58,17 +57,4 @@ public final class FactionModel implements IModel {
      * The invites sent by the faction.
      */
     private final @NonNull Set<String> invitesSent = new HashSet<>();
-
-    /**
-     * Create a new faction model.
-     *
-     * @param name The name of the faction.
-     * @return The faction model.
-     */
-    public static @NonNull FactionModel create(@NonNull String name) {
-        FactionModel factionModel = new FactionModel(UUID.randomUUID().toString(), name);
-        factionModel.setPower(Hunts.getYamlConfig().factions().initialPower());
-
-        return factionModel;
-    }
 }
