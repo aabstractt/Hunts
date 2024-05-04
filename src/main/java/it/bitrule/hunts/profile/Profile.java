@@ -23,7 +23,10 @@ public final class Profile {
         this.dirty = true;
     }
 
-    public void afterSave() {
+    /**
+     * Notify that the profile has been saved.
+     */
+    public void notifySaved() {
         this.dirty = false;
     }
 }

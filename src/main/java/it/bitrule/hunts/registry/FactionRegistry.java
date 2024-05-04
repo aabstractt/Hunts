@@ -192,7 +192,7 @@ public final class FactionRegistry {
      * @param wait Whether to wait for the factions to be saved.
      */
     public void saveAll(boolean wait) {
-        AtomicInteger count = new AtomicInteger(this.factionsDirty.size());
+        AtomicInteger counter = new AtomicInteger(this.factionsDirty.size());
 
         for (UUID factionId : this.factionsDirty) {
             try {
@@ -201,11 +201,11 @@ public final class FactionRegistry {
 
                 Hunts.getFactionRepository().save(faction.getModel());
             } finally {
-                count.decrementAndGet();
+                counter.decrementAndGet();
             }
         }
 
-        while (wait && count.get() > 0) {
+        while (wait && counter.get() > 0) {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {

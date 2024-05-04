@@ -22,7 +22,7 @@ public final class PlayerQuitListener implements Listener {
         if (profile.isDirty()) {
             Promise.runAsync(() -> Hunts.getProfileRepository().save(profile.getModel()));
 
-            profile.afterSave();
+            profile.notifySaved();
         }
     }
 }
