@@ -4,13 +4,13 @@
 - Scoreboard
 
 ## Commands
-- /f create <name>
-- /f disband
-- /f invite <player>
-- /f kick <player>
+- /f create <name> ✅ (No tested)
+- /f disband ✅ (No tested)
+- /f invite <player> ✅ (No tested)
+- /f kick <player> ✅ (No tested)
 - /f join <faction>
 - /f leave
-- /f sethome
+- /f sethome ✅ (No tested)
 - /f home
 - /f claim
 - /f unclaim
@@ -18,6 +18,11 @@
 - /f who <faction>
 - /f list
 - /f chat
+- /f demote ✅ (No tested)
+- /f promote ✅ (No tested)
+- /f deposit ✅ (No tested)
+- /f withdraw
+- /f transfer
 
 ## Admin Commands
 - /f setdtr
