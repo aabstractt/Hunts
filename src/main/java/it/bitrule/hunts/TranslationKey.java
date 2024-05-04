@@ -20,6 +20,9 @@ public enum TranslationKey {
     PLAYER_CANNOT_KICK_SELF("player.cannot-kick-self"),
     PLAYER_SELF_KICKED("player.self-kicked", "who"),
     PLAYER_CANNOT_INVITE_SELF("player.cannot-invite-self"),
+    PLAYER_SELF_DEMOTED("player.self-demoted", "who", "role"),
+    PLAYER_NOT_ENOUGH_BALANCE("player.not-enough-balance", "balance", "amount"),
+    PLAYER_SELF_DEPOSITED_MONEY("player.self-deposited-money", "amount"),
 
     // Translation keys for Factions
     FACTION_ALREADY_EXISTS("faction.already-exists", "faction"),
@@ -31,6 +34,8 @@ public enum TranslationKey {
     FACTION_INVITE_SENT("faction.invite-sent", "player"),
     FACTION_INVITE_BROADCAST("faction.invite-broadcast", "player", "who"),
     FACTION_FULL("faction.full"),
+    FACTION_MEMBER_DEMOTED("faction.member-demoted", "player", "who", "role"),
+    FACTION_MEMBER_DEPOSITED_MONEY("faction.member-deposited-money", "player", "amount"),
     FACTION_NO_VALID_NAME("faction.no-valid-name");
 
     private final static @NonNull Map<String, String> translations = new HashMap<>();
