@@ -115,6 +115,10 @@ public final class ProfileRegistry {
      */
     public void triggerUpdateMember(@Nullable String oldSourceName, @NonNull String sourceName, @NonNull String sourceXuid) {
         if (oldSourceName == null || this.getPlayerXuid(oldSourceName) == null) return;
+        // We only need to update the player's XUID if the player has faction
+        // So if the xuid is null on the cache is because their don't have a faction
+        // Because when use /f create or /f join the player's xuid is set
+        // Or when the server load the factions
 
         this.removePlayerXuid(oldSourceName);
         this.setPlayerXuid(sourceName, sourceXuid);
