@@ -178,7 +178,7 @@ public final class FactionRegistry {
         mainCommand.registerArgument(new FactionCreateArgument());
         mainCommand.registerArgument(new FactionInviteArgument());
         mainCommand.registerArgument(new FactionDemoteArgument());
-//        mainCommand.registerArgument(new FactionPromoteArgument());
+        mainCommand.registerArgument(new FactionPromoteArgument());
         mainCommand.registerArgument(new FactionKickArgument());
         mainCommand.injectSuggestions();
 
