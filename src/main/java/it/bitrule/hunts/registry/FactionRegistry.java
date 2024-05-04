@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -34,7 +35,7 @@ public final class FactionRegistry {
      * The factions' name.
      * The key is the faction's name and the value is the faction's identifier.
      */
-    private final @NonNull Map<String, UUID> factionNames = new ConcurrentHashMap<>();
+    private final @NonNull Map<String, UUID> factionNames = new HashMap<>();
 
     /**
      * The players' faction.
