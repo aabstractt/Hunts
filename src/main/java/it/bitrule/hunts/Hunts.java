@@ -1,6 +1,7 @@
 package it.bitrule.hunts;
 
 import cn.nukkit.plugin.PluginBase;
+import it.bitrule.hunts.config.FactionsConfig;
 import it.bitrule.hunts.config.YamlConfig;
 import it.bitrule.hunts.faction.FactionModel;
 import it.bitrule.hunts.listener.player.PlayerAsyncPreLoginListener;
@@ -106,6 +107,10 @@ public final class Hunts extends PluginBase {
 
     @Override
     public void onEnable() {
+        yamlConfig = new YamlConfig(
+                FactionsConfig.wrap(this.getConfig().getSection("factions"))
+        );
+
         this.getServer().getPluginManager().registerEvents(new PlayerAsyncPreLoginListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
