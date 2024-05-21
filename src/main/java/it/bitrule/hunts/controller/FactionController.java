@@ -182,6 +182,7 @@ public final class FactionController {
                 )
         );
 
+        mainCommand.registerArgument(new FactionTransferArgument());
         mainCommand.registerArgument(new FactionDisbandArgument());
         mainCommand.registerArgument(new FactionDepositArgument());
         mainCommand.registerArgument(new FactionPromoteArgument());
