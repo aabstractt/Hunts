@@ -8,8 +8,8 @@ import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.faction.member.FactionRole;
-import it.bitrule.hunts.registry.FactionRegistry;
-import it.bitrule.hunts.registry.ProfileRegistry;
+import it.bitrule.hunts.controller.FactionController;
+import it.bitrule.hunts.controller.ProfileController;
 import it.bitrule.plorex.commands.abstraction.argument.Argument;
 import it.bitrule.plorex.commands.abstraction.argument.spec.ArgumentSpec;
 import it.bitrule.plorex.commands.actor.CommandActor;
@@ -39,7 +39,7 @@ public final class FactionDisbandArgument extends Argument {
             return;
         }
 
-        Faction faction = FactionRegistry.getInstance().getFactionByPlayer(source);
+        Faction faction = FactionController.getInstance().getFactionByPlayer(source);
         if (faction == null) {
             source.sendMessage(TranslationKey.PLAYER_SELF_MUST_BE_IN_FACTION.build());
 
@@ -63,10 +63,10 @@ public final class FactionDisbandArgument extends Argument {
         String disbandMessage = TranslationKey.FACTION_SUCCESSFULLY_DISBANDED.build(faction.getModel().getName());
 
         for (FactionMember factionMember : faction.getFactionMembers()) {
-            FactionRegistry.getInstance().clearPlayerFaction(factionMember);
+            FactionController.getInstance().clearPlayerFaction(factionMember);
             faction.removeMember(factionMember.getXuid());
 
-            Player player = ProfileRegistry.getInstance().getPlayerObject(factionMember.getXuid());
+            Player player = ProfileController.getInstance().getPlayerObject(factionMember.getXuid());
             if (player == null) continue;
 
             player.sendMessage(disbandMessage);

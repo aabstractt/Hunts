@@ -6,8 +6,8 @@ import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.profile.Profile;
-import it.bitrule.hunts.registry.FactionRegistry;
-import it.bitrule.hunts.registry.ProfileRegistry;
+import it.bitrule.hunts.controller.FactionController;
+import it.bitrule.hunts.controller.ProfileController;
 import it.bitrule.plorex.commands.abstraction.argument.Argument;
 import it.bitrule.plorex.commands.abstraction.argument.spec.ArgumentSpec;
 import it.bitrule.plorex.commands.actor.CommandActor;
@@ -38,14 +38,14 @@ public final class FactionDepositArgument extends Argument {
             return;
         }
 
-        Profile profile = ProfileRegistry.getInstance().getProfileIfLoaded(source.getLoginChainData().getXUID());
+        Profile profile = ProfileController.getInstance().getProfileIfLoaded(source.getLoginChainData().getXUID());
         if (profile == null) {
             source.sendMessage(TextFormat.RED + "Your profile is not loaded.");
 
             return;
         }
 
-        Faction faction = FactionRegistry.getInstance().getFactionByPlayer(source);
+        Faction faction = FactionController.getInstance().getFactionByPlayer(source);
         if (faction == null) {
             source.sendMessage(TranslationKey.PLAYER_SELF_MUST_BE_IN_FACTION.build());
 
@@ -77,7 +77,7 @@ public final class FactionDepositArgument extends Argument {
         }
 
         faction.getModel().setBalance(faction.getModel().getBalance() + amount);
-        FactionRegistry.getInstance().markFactionDirty(faction);
+        FactionController.getInstance().markFactionDirty(faction);
 
         profile.getModel().setBalance(profile.getModel().getBalance() - amount);
         profile.setDirty();

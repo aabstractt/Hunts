@@ -2,6 +2,7 @@ package it.bitrule.hunts.config;
 
 import cn.nukkit.utils.ConfigSection;
 import lombok.NonNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @param maxNameLength  The maximum characters of the faction name.
@@ -24,7 +25,11 @@ public record FactionsConfig(
      * @param mainSection The main section.
      * @return The FactionsConfig object.
      */
-    public static @NonNull FactionsConfig wrap(@NonNull ConfigSection mainSection) {
+    public static @NonNull FactionsConfig wrap(@Nullable ConfigSection mainSection) {
+        if (mainSection == null) {
+            throw new IllegalStateException("Section for 'factions' is not found");
+        }
+
         return new FactionsConfig(
                 mainSection.getInt("max-name-length", 16),
                 mainSection.getInt("min-name-length", 3),

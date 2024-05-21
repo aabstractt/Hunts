@@ -1,4 +1,4 @@
-package it.bitrule.hunts.registry;
+package it.bitrule.hunts.controller;
 
 import cn.nukkit.Player;
 import it.bitrule.hunts.Hunts;
@@ -22,9 +22,9 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public final class FactionRegistry {
+public final class FactionController {
 
-    @Getter private final static @NonNull FactionRegistry instance = new FactionRegistry();
+    @Getter private final static @NonNull FactionController instance = new FactionController();
 
     /**
      * The factions.
@@ -53,16 +53,17 @@ public final class FactionRegistry {
     public void loadAll() {
         for (FactionModel factionModel : Hunts.getFactionRepository().findAll()) {
             Faction faction = new Faction(UUID.fromString(factionModel.getIdentifier()), factionModel);
-            this.registerNewFaction(faction);
+            this.cache(faction);
 
             for (Map.Entry<String, FactionRole> entry : factionModel.getMembers().entrySet()) {
                 ProfileModel profileModel = Hunts.getProfileRepository().findOne(entry.getKey()).orElse(null);
                 if (profileModel == null || profileModel.getName() == null) continue;
 
-                this.setPlayerFaction(
-                        FactionMember.create(profileModel, entry.getValue()),
-                        faction
-                );
+                faction.addMember(FactionMember.create(profileModel, entry.getValue()));
+                this.cacheMember(profileModel.getIdentifier(), faction.getConvertedId());
+
+                // Cache the player's XUID using the player's name
+                ProfileController.getInstance().cacheXuid(profileModel.getName(), profileModel.getIdentifier());
             }
         }
     }
@@ -74,13 +75,10 @@ public final class FactionRegistry {
      * @return The player's faction or null if the player is not in a faction.
      */
     public @Nullable Faction getFactionByPlayer(@NonNull String sourceName) {
-        String sourceXuid = ProfileRegistry.getInstance().getPlayerXuid(sourceName);
+        String sourceXuid = ProfileController.getInstance().getPlayerXuid(sourceName);
         if (sourceXuid == null) return null;
 
-        UUID factionId = this.playersFaction.get(sourceXuid);
-        if (factionId == null) return null;
-
-        return this.factions.get(factionId);
+        return this.getFactionByPlayerXuid(sourceXuid);
     }
 
     /**
@@ -91,7 +89,17 @@ public final class FactionRegistry {
      * @return The player's faction or null if the player is not in a faction.
      */
     public @Nullable Faction getFactionByPlayer(@NonNull Player source) {
-        UUID factionId = this.playersFaction.get(source.getLoginChainData().getXUID());
+        return this.getFactionByPlayerXuid(source.getLoginChainData().getXUID());
+    }
+
+    /**
+     * Get the player's faction using the player's XUID.
+     *
+     * @param sourceXuid The XUID of the player.
+     * @return The player's faction or null if the player is not in a faction.
+     */
+    public @Nullable Faction getFactionByPlayerXuid(@NonNull String sourceXuid) {
+        UUID factionId = this.playersFaction.get(sourceXuid);
         if (factionId == null) return null;
 
         return this.factions.get(factionId);
@@ -115,7 +123,7 @@ public final class FactionRegistry {
      *
      * @param faction The faction to register.
      */
-    public void registerNewFaction(@NonNull Faction faction) {
+    public void cache(@NonNull Faction faction) {
         this.factions.put(faction.getConvertedId(), faction);
         this.factionNames.put(faction.getModel().getName().toLowerCase(), faction.getConvertedId());
     }
@@ -123,15 +131,11 @@ public final class FactionRegistry {
     /**
      * Set the player's faction.
      *
-     * @param factionMember The faction member.
-     * @param faction The faction or null if the player is not in a faction.
+     * @param sourceXuid The XUID of the player.
+     * @param factionConvertedId The identifier of the faction.
      */
-    public void setPlayerFaction(@NonNull FactionMember factionMember, @NonNull Faction faction) {
-        ProfileRegistry.getInstance().setPlayerXuid(factionMember.getName(), factionMember.getXuid());
-
-        this.playersFaction.put(factionMember.getXuid(), faction.getConvertedId());
-
-        faction.addMember(factionMember);
+    public void cacheMember(@NonNull String sourceXuid, @NonNull UUID factionConvertedId) {
+        this.playersFaction.put(sourceXuid, factionConvertedId);
     }
 
     /**
@@ -140,7 +144,7 @@ public final class FactionRegistry {
      * @param factionMember The faction member.
      */
     public void clearPlayerFaction(@NonNull FactionMember factionMember) {
-        ProfileRegistry.getInstance().removePlayerXuid(factionMember.getName());
+        ProfileController.getInstance().clearXuid(factionMember.getName());
 
         this.playersFaction.remove(factionMember.getXuid());
     }

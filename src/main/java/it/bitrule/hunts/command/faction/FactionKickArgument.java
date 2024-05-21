@@ -7,7 +7,7 @@ import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.faction.member.FactionRole;
-import it.bitrule.hunts.registry.FactionRegistry;
+import it.bitrule.hunts.controller.FactionController;
 import it.bitrule.plorex.commands.abstraction.argument.Argument;
 import it.bitrule.plorex.commands.abstraction.argument.spec.ArgumentSpec;
 import it.bitrule.plorex.commands.actor.CommandActor;
@@ -40,7 +40,7 @@ public final class FactionKickArgument extends Argument {
             return;
         }
 
-        Faction faction = FactionRegistry.getInstance().getFactionByPlayer(source);
+        Faction faction = FactionController.getInstance().getFactionByPlayer(source);
         if (faction == null) {
             source.sendMessage(TranslationKey.PLAYER_SELF_MUST_BE_IN_FACTION.build());
 
@@ -88,9 +88,9 @@ public final class FactionKickArgument extends Argument {
             target.sendMessage(TranslationKey.PLAYER_SELF_KICKED.build(source.getName()));
         }
 
-        FactionRegistry.getInstance().clearPlayerFaction(factionMember);
+        FactionController.getInstance().clearPlayerFaction(factionMember);
         faction.removeMember(factionMember.getXuid());
 
-        FactionRegistry.getInstance().markFactionDirty(faction); // Mark the faction as dirty to save it
+        FactionController.getInstance().markFactionDirty(faction); // Mark the faction as dirty to save it
     }
 }

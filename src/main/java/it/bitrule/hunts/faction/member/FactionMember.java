@@ -2,7 +2,7 @@ package it.bitrule.hunts.faction.member;
 
 import cn.nukkit.Player;
 import it.bitrule.hunts.profile.ProfileModel;
-import it.bitrule.hunts.registry.ProfileRegistry;
+import it.bitrule.hunts.controller.ProfileController;
 import lombok.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,7 +39,7 @@ public final class FactionMember {
      * @return The player object or null if the player is not online.
      */
     public @Nullable Player wrapPlayer() {
-        return ProfileRegistry.getInstance().getPlayerObject(this.xuid);
+        return ProfileController.getInstance().getPlayerObject(this.xuid);
     }
 
     /**

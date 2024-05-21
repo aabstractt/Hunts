@@ -8,7 +8,7 @@ import it.bitrule.hunts.listener.player.PlayerAsyncPreLoginListener;
 import it.bitrule.hunts.listener.player.PlayerJoinListener;
 import it.bitrule.hunts.listener.player.PlayerQuitListener;
 import it.bitrule.hunts.profile.ProfileModel;
-import it.bitrule.hunts.registry.FactionRegistry;
+import it.bitrule.hunts.controller.FactionController;
 import it.bitrule.miwiklark.common.Miwiklark;
 import it.bitrule.miwiklark.common.repository.Repository;
 import lombok.NonNull;
@@ -100,7 +100,7 @@ public final class Hunts extends PluginBase {
                 "profiles"
         );
 
-        FactionRegistry.getInstance().loadAll();
+        FactionController.getInstance().loadAll();
 
         TranslationKey.adjustIntern();
     }
@@ -115,12 +115,12 @@ public final class Hunts extends PluginBase {
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
-        this.getServer().getCommandMap().register("team", FactionRegistry.getInstance().createMainCommand());
+        this.getServer().getCommandMap().register("team", FactionController.getInstance().createMainCommand());
     }
 
     @Override
     public void onDisable() {
-        FactionRegistry.getInstance().saveAll(true);
+        FactionController.getInstance().saveAll(true);
 
         Promise.shutdown();
     }

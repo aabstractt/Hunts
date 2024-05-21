@@ -10,6 +10,9 @@ player:
   target-not-in-faction: "&cThe target player is not in a faction."
 
 faction:
+  successfully-created: "&eFaction &9<faction>&e has been &acreated&e by &a<player>"
+  successfully-disbanded: "&4<who>&c disbanded the faction!"
+
   already-exists: "&cThe faction already exists."
   does-not-exist: "&cThe faction does not exist."
 

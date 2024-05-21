@@ -27,7 +27,7 @@ public enum TranslationKey {
 
     // Translation keys for Factions
     FACTION_ALREADY_EXISTS("faction.already-exists", "faction"),
-    FACTION_SUCCESSFULLY_CREATED("faction.successfully-created", "faction"),
+    FACTION_SUCCESSFULLY_CREATED("faction.successfully-created", "faction", "player"),
     FACTION_SUCCESSFULLY_DISBANDED("faction.successfully-disbanded", "who"),
     FACTION_SUCCESSFULLY_KICKED_SOMEONE("faction.successfully-kicked-someone", "who", "player"),
     FACTION_MEMBER_ALREADY_INVITED("faction.member-already-invited", "player"),

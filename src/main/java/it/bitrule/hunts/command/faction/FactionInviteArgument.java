@@ -8,7 +8,7 @@ import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.faction.member.FactionRole;
-import it.bitrule.hunts.registry.FactionRegistry;
+import it.bitrule.hunts.controller.FactionController;
 import it.bitrule.plorex.commands.abstraction.argument.Argument;
 import it.bitrule.plorex.commands.abstraction.argument.spec.ArgumentSpec;
 import it.bitrule.plorex.commands.actor.CommandActor;
@@ -39,7 +39,7 @@ public final class FactionInviteArgument extends Argument {
             return;
         }
 
-        Faction faction = FactionRegistry.getInstance().getFactionByPlayer(source);
+        Faction faction = FactionController.getInstance().getFactionByPlayer(source);
         if (faction == null) {
             source.sendMessage(TranslationKey.PLAYER_SELF_MUST_BE_IN_FACTION.build());
 
@@ -78,7 +78,7 @@ public final class FactionInviteArgument extends Argument {
             return;
         }
 
-        if (FactionRegistry.getInstance().getFactionByPlayer(target) != null) {
+        if (FactionController.getInstance().getFactionByPlayer(target) != null) {
             source.sendMessage(TranslationKey.PLAYER_ALREADY_IN_FACTION.build(target.getName()));
 
             return;
@@ -96,6 +96,6 @@ public final class FactionInviteArgument extends Argument {
         faction.broadcast(TranslationKey.FACTION_INVITE_BROADCAST.build(target.getName(), source.getName()));
 
         faction.getModel().getInvitesSent().add(target.getLoginChainData().getXUID());
-        FactionRegistry.getInstance().markFactionDirty(faction);
+        FactionController.getInstance().markFactionDirty(faction);
     }
 }

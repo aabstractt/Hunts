@@ -4,7 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
-import it.bitrule.hunts.registry.ProfileRegistry;
+import it.bitrule.hunts.controller.ProfileController;
 import lombok.NonNull;
 
 public final class PlayerJoinListener implements Listener {
@@ -16,7 +16,7 @@ public final class PlayerJoinListener implements Listener {
             throw new IllegalStateException("The player is not online");
         }
 
-        ProfileRegistry.getInstance().setPlayerObject(
+        ProfileController.getInstance().setPlayerObject(
                 player.getLoginChainData().getXUID(),
                 player
         );

@@ -7,7 +7,7 @@ import cn.nukkit.event.player.PlayerQuitEvent;
 import it.bitrule.hunts.Hunts;
 import it.bitrule.hunts.Promise;
 import it.bitrule.hunts.profile.Profile;
-import it.bitrule.hunts.registry.ProfileRegistry;
+import it.bitrule.hunts.controller.ProfileController;
 import lombok.NonNull;
 
 public final class PlayerQuitListener implements Listener {
@@ -16,13 +16,13 @@ public final class PlayerQuitListener implements Listener {
     public void onPlayerQuitEvent(@NonNull PlayerQuitEvent ev) {
         Player player = ev.getPlayer();
 
-        Profile profile = ProfileRegistry.getInstance().removeProfile(player.getLoginChainData().getXUID());
+        Profile profile = ProfileController.getInstance().removeProfile(player.getLoginChainData().getXUID());
         if (profile == null) return;
 
-        if (profile.isDirty()) {
-            Promise.runAsync(() -> Hunts.getProfileRepository().save(profile.getModel()));
+        if (!profile.isDirty()) return;
 
-            profile.notifySaved();
-        }
+        Promise.runAsync(() -> Hunts.getProfileRepository().save(profile.getModel()));
+
+        profile.notifySaved();
     }
 }

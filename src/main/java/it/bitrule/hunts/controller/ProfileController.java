@@ -1,8 +1,6 @@
-package it.bitrule.hunts.registry;
+package it.bitrule.hunts.controller;
 
 import cn.nukkit.Player;
-import it.bitrule.hunts.faction.Faction;
-import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.profile.Profile;
 import lombok.Getter;
 import lombok.NonNull;
@@ -11,9 +9,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class ProfileRegistry {
+public final class ProfileController {
 
-    @Getter private final static @NonNull ProfileRegistry instance = new ProfileRegistry();
+    @Getter private final static @NonNull ProfileController instance = new ProfileController();
 
     /**
      * The players' XUID.
@@ -64,7 +62,7 @@ public final class ProfileRegistry {
      * @param sourceName The name of the player.
      * @param sourceXuid The XUID of the player.
      */
-    public void setPlayerXuid(@NonNull String sourceName, @NonNull String sourceXuid) {
+    public void cacheXuid(@NonNull String sourceName, @NonNull String sourceXuid) {
         this.playersXuid.put(sourceName.toLowerCase(), sourceXuid);
     }
 
@@ -83,7 +81,7 @@ public final class ProfileRegistry {
      *
      * @param sourceName The name of the player.
      */
-    public void removePlayerXuid(@NonNull String sourceName) {
+    public void clearXuid(@NonNull String sourceName) {
         this.playersXuid.remove(sourceName.toLowerCase());
     }
 
@@ -120,17 +118,7 @@ public final class ProfileRegistry {
         // Because when use /f create or /f join the player's xuid is set
         // Or when the server load the factions
 
-        this.removePlayerXuid(oldSourceName);
-        this.setPlayerXuid(sourceName, sourceXuid);
-
-        Faction faction = FactionRegistry.getInstance().getFactionByPlayer(sourceName);
-        if (faction == null) return;
-
-        FactionMember factionMember = faction.getMemberByXuid(sourceXuid);
-        if (factionMember == null) {
-            throw new IllegalStateException("Faction member is not found");
-        }
-
-        factionMember.setName(sourceName);
+        this.clearXuid(oldSourceName);
+        this.cacheXuid(sourceName, sourceXuid);
     }
 }

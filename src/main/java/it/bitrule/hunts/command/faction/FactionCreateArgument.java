@@ -1,6 +1,7 @@
 package it.bitrule.hunts.command.faction;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.utils.TextFormat;
 import it.bitrule.hunts.Hunts;
 import it.bitrule.hunts.Promise;
@@ -9,8 +10,8 @@ import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.faction.member.FactionRole;
 import it.bitrule.hunts.profile.Profile;
-import it.bitrule.hunts.registry.FactionRegistry;
-import it.bitrule.hunts.registry.ProfileRegistry;
+import it.bitrule.hunts.controller.FactionController;
+import it.bitrule.hunts.controller.ProfileController;
 import it.bitrule.plorex.commands.abstraction.argument.Argument;
 import it.bitrule.plorex.commands.abstraction.argument.spec.ArgumentSpec;
 import it.bitrule.plorex.commands.actor.CommandActor;
@@ -54,20 +55,20 @@ public final class FactionCreateArgument extends Argument {
             return;
         }
 
-        Profile profile = ProfileRegistry.getInstance().getProfileIfLoaded(player.getLoginChainData().getXUID());
+        Profile profile = ProfileController.getInstance().getProfileIfLoaded(player.getLoginChainData().getXUID());
         if (profile == null) {
             commandActor.sendMessage(TextFormat.RED + "Your profile is not loaded");
 
             return;
         }
 
-        if (FactionRegistry.getInstance().getFactionByName(factionName) != null) {
+        if (FactionController.getInstance().getFactionByName(factionName) != null) {
             commandActor.sendMessage(TranslationKey.FACTION_ALREADY_EXISTS.build(factionName));
 
             return;
         }
 
-        if (FactionRegistry.getInstance().getFactionByPlayer(player) != null) {
+        if (FactionController.getInstance().getFactionByPlayer(player) != null) {
             commandActor.sendMessage(TranslationKey.PLAYER_SELF_ALREADY_IN_FACTION.build());
 
             return;
@@ -80,12 +81,15 @@ public final class FactionCreateArgument extends Argument {
         }
 
         Faction faction = Faction.empty(factionName);
-        FactionRegistry.getInstance().setPlayerFaction(
-                FactionMember.create(profile.getModel(), FactionRole.LEADER),
-                faction
-        );
-        FactionRegistry.getInstance().registerNewFaction(faction);
+        faction.addMember(FactionMember.create(profile.getModel(), FactionRole.LEADER));
+
+        FactionController.getInstance().cache(faction);
+        FactionController.getInstance().cacheMember(player.getLoginChainData().getXUID(), faction.getConvertedId());
+
+        ProfileController.getInstance().cacheXuid(player.getName(), player.getLoginChainData().getXUID());
 
         Promise.runAsync(() -> Hunts.getFactionRepository().save(faction.getModel()));
+
+        Server.getInstance().broadcastMessage(TranslationKey.FACTION_SUCCESSFULLY_CREATED.build(factionName, player.getName()));
     }
 }
