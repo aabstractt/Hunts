@@ -89,15 +89,25 @@ public final class Hunts extends PluginBase {
             throw new IllegalStateException("Database name is not defined in the configuration");
         }
 
+        String factionsCollection = this.getConfig().getString("mongodb.factions-collection");
+        if (factionsCollection == null) {
+            throw new IllegalStateException("Factions collection is not defined in the configuration");
+        }
+
+        String profilesCollection = this.getConfig().getString("mongodb.profiles-collection");
+        if (profilesCollection == null) {
+            throw new IllegalStateException("Profiles collection is not defined in the configuration");
+        }
+
         factionRepository = Miwiklark.addRepository(
                 FactionModel.class,
                 dbName,
-                "factions"
+                factionsCollection
         );
         profileRepository = Miwiklark.addRepository(
                 ProfileModel.class,
                 dbName,
-                "profiles"
+                profilesCollection
         );
 
         FactionController.getInstance().loadAll();

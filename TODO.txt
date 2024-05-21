@@ -1,5 +1,5 @@
-- Faction storage
-- Factions loader
+- Faction storage ✅ (No tested)
+- Factions loader ✅ (No tested)
 - DTR
 - Scoreboard
 
@@ -8,8 +8,8 @@
 - /f disband ✅ (No tested)
 - /f invite <player> ✅ (No tested)
 - /f kick <player> ✅ (No tested)
-- /f join <faction>
-- /f leave
+- /f join <faction> ✅ (No tested)
+- /f leave ✅ (No tested)
 - /f sethome ✅ (No tested)
 - /f home
 - /f claim
@@ -22,7 +22,9 @@
 - /f promote ✅ (No tested)
 - /f deposit ✅ (No tested)
 - /f withdraw
-- /f transfer
+- /f transfer ✅ (No tested)
+
+# Development for claiming system
 
 ## Admin Commands
 - /f setdtr
