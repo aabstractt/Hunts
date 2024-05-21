@@ -147,12 +147,10 @@ public final class FactionController {
     /**
      * Clear the player's faction.
      *
-     * @param factionMember The faction member.
+     * @param sourceXuid The XUID of the player.
      */
-    public void clearPlayerFaction(@NonNull FactionMember factionMember) {
-        ProfileController.getInstance().clearXuid(factionMember.getName());
-
-        this.playersFaction.remove(factionMember.getXuid());
+    public void clearMember(@NonNull String sourceXuid) {
+        this.playersFaction.remove(sourceXuid);
     }
 
     /**
@@ -191,6 +189,7 @@ public final class FactionController {
         mainCommand.registerArgument(new FactionCreateArgument());
         mainCommand.registerArgument(new FactionInviteArgument());
         mainCommand.registerArgument(new FactionDemoteArgument());
+        mainCommand.registerArgument(new FactionLeaveArgument());
         mainCommand.registerArgument(new FactionKickArgument());
         mainCommand.registerArgument(new FactionJoinArgument());
         mainCommand.injectSuggestions();

@@ -63,7 +63,9 @@ public final class FactionDisbandArgument extends Argument {
         String disbandMessage = TranslationKey.FACTION_SUCCESSFULLY_DISBANDED.build(faction.getModel().getName());
 
         for (FactionMember factionMember : faction.getFactionMembers()) {
-            FactionController.getInstance().clearPlayerFaction(factionMember);
+            FactionController.getInstance().clearMember(factionMember.getXuid());
+            ProfileController.getInstance().clearXuid(factionMember.getName());
+
             faction.removeMember(factionMember.getXuid());
 
             Player player = ProfileController.getInstance().getPlayerObject(factionMember.getXuid());

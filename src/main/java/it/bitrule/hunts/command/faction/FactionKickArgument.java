@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.utils.TextFormat;
 import it.bitrule.hunts.TranslationKey;
+import it.bitrule.hunts.controller.ProfileController;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.faction.member.FactionRole;
@@ -83,14 +84,16 @@ public final class FactionKickArgument extends Argument {
             target.sendMessage(kickedSomeoneMessage);
         }
 
-        Player target = factionMember.wrapPlayer();
-        if (target != null && target.isOnline()) {
-            target.sendMessage(TranslationKey.PLAYER_SELF_KICKED.build(source.getName()));
-        }
+        FactionController.getInstance().clearMember(factionMember.getXuid());
+        ProfileController.getInstance().clearXuid(factionMember.getName());
 
-        FactionController.getInstance().clearPlayerFaction(factionMember);
         faction.removeMember(factionMember.getXuid());
 
         FactionController.getInstance().markFactionDirty(faction); // Mark the faction as dirty to save it
+
+        Player target = factionMember.wrapPlayer();
+        if (target == null || !target.isOnline()) return;
+
+        target.sendMessage(TranslationKey.PLAYER_SELF_KICKED.build(source.getName()));
     }
 }
