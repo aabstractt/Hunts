@@ -15,10 +15,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -119,6 +116,15 @@ public final class FactionController {
     }
 
     /**
+     * Get all factions.
+     *
+     * @return All factions.
+     */
+    public @NonNull Collection<Faction> getAll() {
+        return this.factions.values();
+    }
+
+    /**
      * Register a new faction.
      *
      * @param faction The faction to register.
@@ -186,6 +192,7 @@ public final class FactionController {
         mainCommand.registerArgument(new FactionInviteArgument());
         mainCommand.registerArgument(new FactionDemoteArgument());
         mainCommand.registerArgument(new FactionKickArgument());
+        mainCommand.registerArgument(new FactionJoinArgument());
         mainCommand.injectSuggestions();
 
         return mainCommand;
