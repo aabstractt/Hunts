@@ -104,21 +104,4 @@ public final class ProfileController {
     public @Nullable Player getPlayerObject(@NonNull String sourceXuid) {
         return this.playersObject.get(sourceXuid);
     }
-
-    /**
-     * Trigger an update member event.
-     *
-     * @param sourceName the name of the source
-     * @param sourceXuid the xuid of the source
-     */
-    public void triggerUpdateMember(@Nullable String oldSourceName, @NonNull String sourceName, @NonNull String sourceXuid) {
-        if (oldSourceName == null || this.getPlayerXuid(oldSourceName) == null) return;
-        // We only need to update the player's XUID if the player has faction
-        // So if the xuid is null on the cache is because their don't have a faction
-        // Because when use /f create or /f join the player's xuid is set
-        // Or when the server load the factions
-
-        this.clearXuid(oldSourceName);
-        this.cacheXuid(sourceName, sourceXuid);
-    }
 }

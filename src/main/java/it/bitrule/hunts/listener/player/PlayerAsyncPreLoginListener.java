@@ -42,12 +42,6 @@ public final class PlayerAsyncPreLoginListener implements Listener {
             Hunts.getProfileRepository().save(profileModel);
         }
 
-        // Trigger the update member event
-        ProfileController.getInstance().triggerUpdateMember(
-                profileModel.getLastName(),
-                ev.getName(),
-                xuid
-        );
         ProfileController.getInstance().registerNewProfile(new ProfileInfo(profileModel));
 
         // Trigger the update faction member event
@@ -58,5 +52,16 @@ public final class PlayerAsyncPreLoginListener implements Listener {
         if (factionMember == null) return;
 
         factionMember.setName(ev.getName());
+
+        // We only need to update the player's XUID if the player has faction
+        // So if the xuid is null on the cache is because their don't have a faction
+        // Because when use /f create or /f join the player's xuid is set
+        // Or when the server load the factions
+
+        ProfileController profileController = ProfileController.getInstance();
+        if (profileModel.getLastName() == null || profileController.getPlayerXuid(profileModel.getLastName()) == null) return;
+
+        profileController.clearXuid(profileModel.getLastName());
+        profileController.cacheXuid(ev.getName(), xuid);
     }
 }
