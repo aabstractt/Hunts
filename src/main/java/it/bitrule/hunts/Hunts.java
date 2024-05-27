@@ -134,4 +134,12 @@ public final class Hunts extends PluginBase {
 
         Promise.shutdown();
     }
+
+    public static @Nullable Integer parseInteger(@NonNull String s) {
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
 }
