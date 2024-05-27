@@ -9,7 +9,7 @@ import it.bitrule.hunts.Hunts;
 import it.bitrule.hunts.controller.FactionController;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
-import it.bitrule.hunts.profile.Profile;
+import it.bitrule.hunts.profile.ProfileInfo;
 import it.bitrule.hunts.profile.ProfileModel;
 import it.bitrule.hunts.controller.ProfileController;
 import lombok.NonNull;
@@ -48,7 +48,7 @@ public final class PlayerAsyncPreLoginListener implements Listener {
                 ev.getName(),
                 xuid
         );
-        ProfileController.getInstance().registerNewProfile(new Profile(profileModel));
+        ProfileController.getInstance().registerNewProfile(new ProfileInfo(profileModel));
 
         // Trigger the update faction member event
         Faction faction = FactionController.getInstance().getFactionByPlayerXuid(xuid);

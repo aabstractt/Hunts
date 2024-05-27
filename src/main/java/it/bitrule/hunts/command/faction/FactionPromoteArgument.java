@@ -7,7 +7,7 @@ import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.faction.member.FactionRole;
-import it.bitrule.hunts.profile.Profile;
+import it.bitrule.hunts.profile.ProfileInfo;
 import it.bitrule.hunts.controller.FactionController;
 import it.bitrule.hunts.controller.ProfileController;
 import it.bitrule.plorex.commands.abstraction.argument.Argument;
@@ -44,8 +44,8 @@ public final class FactionPromoteArgument extends Argument {
             return;
         }
 
-        Profile profile = ProfileController.getInstance().getProfileIfLoaded(source.getLoginChainData().getXUID());
-        if (profile == null) {
+        ProfileInfo profileInfo = ProfileController.getInstance().getProfileIfLoaded(source.getLoginChainData().getXUID());
+        if (profileInfo == null) {
             source.sendMessage(TextFormat.RED + "Your profile is not loaded.");
 
             return;

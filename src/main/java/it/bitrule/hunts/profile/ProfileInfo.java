@@ -3,7 +3,7 @@ package it.bitrule.hunts.profile;
 import lombok.*;
 
 @RequiredArgsConstructor @Data
-public final class Profile {
+public final class ProfileInfo {
 
     /**
      * The profile model.

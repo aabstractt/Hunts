@@ -5,7 +5,7 @@ import cn.nukkit.utils.TextFormat;
 import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.controller.FactionController;
 import it.bitrule.hunts.controller.ProfileController;
-import it.bitrule.hunts.profile.Profile;
+import it.bitrule.hunts.profile.ProfileInfo;
 import it.bitrule.plorex.commands.abstraction.argument.Argument;
 import it.bitrule.plorex.commands.abstraction.argument.spec.ArgumentSpec;
 import it.bitrule.plorex.commands.actor.CommandActor;
@@ -35,8 +35,8 @@ public final class FactionChatArgument extends Argument {
             return;
         }
 
-        Profile profile = ProfileController.getInstance().getProfileIfLoaded(commandSender.getLoginChainData().getXUID());
-        if (profile == null) {
+        ProfileInfo profileInfo = ProfileController.getInstance().getProfileIfLoaded(commandSender.getLoginChainData().getXUID());
+        if (profileInfo == null) {
             commandSender.sendMessage(TextFormat.RED + "Your profile is not loaded.");
 
             return;
@@ -48,9 +48,9 @@ public final class FactionChatArgument extends Argument {
             return;
         }
 
-        profile.setFactionChat(!profile.isFactionChat());
+        profileInfo.setFactionChat(!profileInfo.isFactionChat());
 
         // TODO: Implement this message to the TranslationKey class
-        commandSender.sendMessage(TextFormat.YELLOW + "Faction chat is now " + (profile.isFactionChat() ? TextFormat.GREEN + "enabled" : TextFormat.RED + "disabled") + TextFormat.YELLOW + ".");
+        commandSender.sendMessage(TextFormat.YELLOW + "Faction chat is now " + (profileInfo.isFactionChat() ? TextFormat.GREEN + "enabled" : TextFormat.RED + "disabled") + TextFormat.YELLOW + ".");
     }
 }

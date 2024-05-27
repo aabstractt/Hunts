@@ -1,7 +1,7 @@
 package it.bitrule.hunts.controller;
 
 import cn.nukkit.Player;
-import it.bitrule.hunts.profile.Profile;
+import it.bitrule.hunts.profile.ProfileInfo;
 import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,14 +27,14 @@ public final class ProfileController {
      * The profiles loaded.
      * The key is the player's XUID and the value is the profile.
      */
-    private final @NonNull Map<String, Profile> profiles = new ConcurrentHashMap<>();
+    private final @NonNull Map<String, ProfileInfo> profiles = new ConcurrentHashMap<>();
 
     /**
      * Register a new profile.
-     * @param profile The profile to register.
+     * @param profileInfo The profile to register.
      */
-    public void registerNewProfile(@NonNull Profile profile) {
-        this.profiles.put(profile.getModel().getIdentifier(), profile);
+    public void registerNewProfile(@NonNull ProfileInfo profileInfo) {
+        this.profiles.put(profileInfo.getModel().getIdentifier(), profileInfo);
     }
 
     /**
@@ -42,7 +42,7 @@ public final class ProfileController {
      * @param xuid The XUID of the player.
      * @return The profile of the player or null if the profile is not found.
      */
-    public @Nullable Profile getProfileIfLoaded(@NonNull String xuid) {
+    public @Nullable ProfileInfo getProfileIfLoaded(@NonNull String xuid) {
         return this.profiles.get(xuid);
     }
 
@@ -52,7 +52,7 @@ public final class ProfileController {
      * @param xuid The XUID of the player.
      * @return The profile of the player or null if the profile is not found.
      */
-    public @Nullable Profile removeProfile(@NonNull String xuid) {
+    public @Nullable ProfileInfo removeProfile(@NonNull String xuid) {
         return this.profiles.remove(xuid);
     }
 

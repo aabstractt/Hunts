@@ -5,7 +5,7 @@ import cn.nukkit.utils.TextFormat;
 import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
-import it.bitrule.hunts.profile.Profile;
+import it.bitrule.hunts.profile.ProfileInfo;
 import it.bitrule.hunts.controller.FactionController;
 import it.bitrule.hunts.controller.ProfileController;
 import it.bitrule.plorex.commands.abstraction.argument.Argument;
@@ -38,8 +38,8 @@ public final class FactionDepositArgument extends Argument {
             return;
         }
 
-        Profile profile = ProfileController.getInstance().getProfileIfLoaded(source.getLoginChainData().getXUID());
-        if (profile == null) {
+        ProfileInfo profileInfo = ProfileController.getInstance().getProfileIfLoaded(source.getLoginChainData().getXUID());
+        if (profileInfo == null) {
             source.sendMessage(TextFormat.RED + "Your profile is not loaded.");
 
             return;
@@ -61,7 +61,7 @@ public final class FactionDepositArgument extends Argument {
 
         Integer amount = NumberUtils.isNumber(args[0]) ? Integer.parseInt(args[0]) : null;
         if (amount == null && args[0].equalsIgnoreCase("all")) {
-            amount = profile.getModel().getBalance();
+            amount = profileInfo.getModel().getBalance();
         }
 
         if (amount == null || amount <= 0) {
@@ -70,8 +70,8 @@ public final class FactionDepositArgument extends Argument {
             return;
         }
 
-        if (profile.getModel().getBalance() < amount) {
-            source.sendMessage(TranslationKey.PLAYER_NOT_ENOUGH_BALANCE.build(profile.getModel().getBalance(), amount));
+        if (profileInfo.getModel().getBalance() < amount) {
+            source.sendMessage(TranslationKey.PLAYER_NOT_ENOUGH_BALANCE.build(profileInfo.getModel().getBalance(), amount));
 
             return;
         }
@@ -79,8 +79,8 @@ public final class FactionDepositArgument extends Argument {
         faction.getModel().setBalance(faction.getModel().getBalance() + amount);
         FactionController.getInstance().markFactionDirty(faction);
 
-        profile.getModel().setBalance(profile.getModel().getBalance() - amount);
-        profile.setDirty();
+        profileInfo.getModel().setBalance(profileInfo.getModel().getBalance() - amount);
+        profileInfo.setDirty();
 
         source.sendMessage(TranslationKey.PLAYER_SELF_DEPOSITED_MONEY.build(amount));
         faction.broadcast(TranslationKey.FACTION_MEMBER_DEPOSITED_MONEY.build(source.getName(), amount));

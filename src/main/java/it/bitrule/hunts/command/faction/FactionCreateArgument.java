@@ -9,7 +9,7 @@ import it.bitrule.hunts.TranslationKey;
 import it.bitrule.hunts.faction.Faction;
 import it.bitrule.hunts.faction.member.FactionMember;
 import it.bitrule.hunts.faction.member.FactionRole;
-import it.bitrule.hunts.profile.Profile;
+import it.bitrule.hunts.profile.ProfileInfo;
 import it.bitrule.hunts.controller.FactionController;
 import it.bitrule.hunts.controller.ProfileController;
 import it.bitrule.plorex.commands.abstraction.argument.Argument;
@@ -55,8 +55,8 @@ public final class FactionCreateArgument extends Argument {
             return;
         }
 
-        Profile profile = ProfileController.getInstance().getProfileIfLoaded(player.getLoginChainData().getXUID());
-        if (profile == null) {
+        ProfileInfo profileInfo = ProfileController.getInstance().getProfileIfLoaded(player.getLoginChainData().getXUID());
+        if (profileInfo == null) {
             commandActor.sendMessage(TextFormat.RED + "Your profile is not loaded");
 
             return;
@@ -81,7 +81,7 @@ public final class FactionCreateArgument extends Argument {
         }
 
         Faction faction = Faction.empty(factionName);
-        faction.addMember(FactionMember.create(profile.getModel(), FactionRole.LEADER));
+        faction.addMember(FactionMember.create(profileInfo.getModel(), FactionRole.LEADER));
 
         FactionController.getInstance().cache(faction);
         FactionController.getInstance().cacheMember(player.getLoginChainData().getXUID(), faction.getConvertedId());
